@@ -1,0 +1,8 @@
+com\mycompany\ctmailinh\object\Customer.class
+com\mycompany\ctmailinh\exception\ExceptionBirthday.class
+com\mycompany\ctmailinh\exception\ExceptionCharacter.class
+com\mycompany\ctmailinh\libraly\CheckException.class
+com\mycompany\ctmailinh\exception\ExceptionID.class
+com\mycompany\ctmailinh\exception\ExceptionGender.class
+com\mycompany\ctmailinh\programme\Test.class
+com\mycompany\ctmailinh\exception\ExceptionPhone.class
