@@ -13,19 +13,23 @@ import java.util.Scanner;
  */
 public class Employee {
     protected int id;
-    protected String ID_card,fullname,gender,address,phone,birthday,start_join;
+    protected String ID_card,fullname,gender,address,phone,birthday,salary;
 
     public Employee() {
     }
 
-    public Employee(int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join) {
+    public Employee(int id, String ID_card, String fullname, String phone) {
         CheckException.checkNumberZero(id);
         CheckException.checkNumber(ID_card);
         CheckException.checkCharacter(fullname);
-        CheckException.checkGender(gender);
         CheckException.checkPhone(phone);
-        CheckException.checkDate(birthday);
-        CheckException.checkDate(start_join);
+        this.id = id;
+        this.ID_card = ID_card;
+        this.fullname = fullname;
+        this.phone = phone;
+    }
+
+    public Employee(int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String salary) {
         this.id = id;
         this.ID_card = ID_card;
         this.fullname = fullname;
@@ -33,23 +37,34 @@ public class Employee {
         this.address = address;
         this.phone = phone;
         this.birthday = birthday;
-        this.start_join = start_join;
+        this.salary = salary;
+    }
+    
+    public Employee(int id, String ID_card, String fullname, String phone,String salary) {
+        CheckException.checkNumberZero(id);
+        CheckException.checkNumber(ID_card);
+        CheckException.checkCharacter(fullname);
+        CheckException.checkPhone(phone);
+        CheckException.checkNumber(salary);
+        this.id = id;
+        this.ID_card = ID_card;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.salary = salary;
     }
 
-    public Employee(String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join) {
+    public Employee(String ID_card, String fullname, String gender, String address, String phone, String birthday) {
         CheckException.checkNumber(ID_card);
         CheckException.checkCharacter(fullname);
         CheckException.checkGender(gender);
         CheckException.checkPhone(phone);
         CheckException.checkDate(birthday);
-        CheckException.checkDate(start_join);
         this.ID_card = ID_card;
         this.fullname = fullname;
         this.gender = gender;
         this.address = address;
         this.phone = phone;
         this.birthday = birthday;
-        this.start_join = start_join;
     }
 
     public int getId() {
@@ -68,6 +83,14 @@ public class Employee {
     public void setID_card(String ID_card) {
         CheckException.checkNumber(ID_card);
         this.ID_card = ID_card;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
     }
 
     public String getFullname() {
@@ -114,20 +137,11 @@ public class Employee {
         this.birthday = birthday;
     }
 
-    public String getStart_join() {
-        return start_join;
-    }
-
-    public void setStart_join(String start_join) {
-        CheckException.checkDate(start_join);
-        this.start_join = start_join;
-    }
-
     @Override
     public String toString() {
-        return "id=" + id + ", ID_card=" + ID_card + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", birthday=" + birthday + ", start_join=" + start_join;
+        return "Employee{" + ", ID_card=" + ID_card + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", birthday=" + birthday + ", salary=" + salary + '}';
     }
-    
+
     public void input(){
         Scanner sc = new Scanner(System.in);
         
@@ -154,8 +168,5 @@ public class Employee {
         birthday = sc.nextLine();
         CheckException.checkDate(birthday);
         
-        System.out.println("Start job (dd-mm-YYYY):");
-        start_join = sc.nextLine();
-        CheckException.checkDate(start_join);
     }
 }

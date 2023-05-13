@@ -61,6 +61,32 @@ public class QuerryCustomer {
         close();
     }
     
+    public static int insertGetID(Customer customer) {
+        open();
+        String sql = "insert into customer(ID_card,fullname,gender,birthday,address,phone) values (?,?,?,?,?,?)";
+        String[] returnId = { "BATCHID" };
+        int key = -1;
+        try {
+            statement = conn.prepareStatement(sql,returnId);
+            statement.setString(1, customer.getID_card());
+            statement.setString(2, customer.getFullname());
+            statement.setString(3, customer.getGender());
+            statement.setString(4, customer.getBirthday());
+            statement.setString(5, customer.getAddress());
+            statement.setString(6, customer.getPhone());
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                key = rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return key;
+    }
+    
     public static List<Customer> select() {
         List<Customer> listCustomer = new ArrayList<>();
         open();

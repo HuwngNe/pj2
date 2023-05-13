@@ -32,38 +32,6 @@ public class Salary extends Employee{
         this.date = date;
     }
 
-    public Salary(int id_salary, int id_employee, double salary, double overtime, double total_salary, String date, int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join) {
-        super(id, ID_card, fullname, gender, address, phone, birthday, start_join);
-        CheckException.checkNumberZero(id_salary);
-        CheckException.checkNumberZero(id_employee);
-        CheckException.checkNumberZero(salary);
-        CheckException.checkNumberZero(total_salary);
-        CheckException.checkDate(date);
-        this.id_salary = id_salary;
-        this.id_employee = id_employee;
-        this.salary = salary;
-        this.overtime = overtime;
-        this.total_salary = total_salary;
-        this.date = date;
-    }
-
-    public Salary(int id_salary, int id_employee, double salary, double overtime, double total_salary, String date, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join) {
-        super(ID_card, fullname, gender, address, phone, birthday, start_join);
-        CheckException.checkNumberZero(id_salary);
-        CheckException.checkNumberZero(id_employee);
-        CheckException.checkNumberZero(salary);
-        CheckException.checkNumberZero(total_salary);
-        CheckException.checkDate(date);
-        this.id_salary = id_salary;
-        this.id_employee = id_employee;
-        this.salary = salary;
-        this.overtime = overtime;
-        this.total_salary = total_salary;
-        this.date = date;
-    }
-
-    
-    
     public int getId_salary() {
         return id_salary;
     }
@@ -80,10 +48,6 @@ public class Salary extends Employee{
     public void setId_employee(int id_employee) {
         CheckException.checkNumberZero(id_employee);
         this.id_employee = id_employee;
-    }
-
-    public double getSalary() {
-        return salary;
     }
 
     public void setSalary(double salary) {

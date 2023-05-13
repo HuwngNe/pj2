@@ -50,29 +50,7 @@ public class Bonus extends Salary{
         this.name = name;
     }
 
-    public Bonus(int id_bonus, int id_salary_bonus, double pay, String name, int id_salary, int id_employee, double salary, double overtime, double total_salary, String date, int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join) {
-        super(id_salary, id_employee, salary, overtime, total_salary, date, id, ID_card, fullname, gender, address, phone, birthday, start_join);
-        CheckException.checkNumberZero(id_bonus);
-        CheckException.checkNumberZero(id_salary_bonus);
-        CheckException.checkNumberZero(pay);
-        CheckException.checkCharacter(name);
-        this.id_bonus = id_bonus;
-        this.id_salary_bonus = id_salary_bonus;
-        this.pay = pay;
-        this.name = name;
-    }
-
-    public Bonus(int id_bonus, int id_salary_bonus, double pay, String name, int id_salary, int id_employee, double salary, double overtime, double total_salary, String date, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join) {
-        super(id_salary, id_employee, salary, overtime, total_salary, date, ID_card, fullname, gender, address, phone, birthday, start_join);
-        CheckException.checkNumberZero(id_bonus);
-        CheckException.checkNumberZero(id_salary_bonus);
-        CheckException.checkNumberZero(pay);
-        CheckException.checkCharacter(name);
-        this.id_bonus = id_bonus;
-        this.id_salary_bonus = id_salary_bonus;
-        this.pay = pay;
-        this.name = name;
-    }
+    
 
     public int getId_bonus() {
         return id_bonus;

@@ -10,54 +10,46 @@ import com.mycompany.ctmailinh.libraly.CheckException;
  *
  * @author Admin
  */
-public class Office extends WorkDay{
-    protected int id_office,id_workday_office;
+public class Office extends Employee{
+    protected int id_office,id_employee;
     protected String position,start,end;
 
     public Office() {
     }
 
-    public Office(int id_office, int id_workday_office, String position, String start, String end) {
-        CheckException.checkNumberZero(id_office);
-        CheckException.checkNumberZero(id_workday_office);
-        CheckException.checkCharacter(position);
-        CheckException.checkDate(start);
-        CheckException.checkDate(end);
+    public Office(int id_office, int id_employee, String position, String start, String end) {
         this.id_office = id_office;
-        this.id_workday_office = id_workday_office;
+        this.id_employee = id_employee;
         this.position = position;
         this.start = start;
         this.end = end;
     }
 
-    public Office(int id_office, int id_workday_office, String position, String start, String end, int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join, int id_workday, int employee_id, double total_price_date, String time_start, String time_end) {
-        super(id, ID_card, fullname, gender, address, phone, birthday, start_join, id_workday, employee_id, total_price_date, time_start, time_end);
+    public Office(int id_office, String position, int id, String ID_card, String fullname, String phone) {
+        super(id, ID_card, fullname, phone);
         CheckException.checkNumberZero(id_office);
-        CheckException.checkNumberZero(id_workday_office);
         CheckException.checkCharacter(position);
-        CheckException.checkDate(start);
-        CheckException.checkDate(end);
         this.id_office = id_office;
-        this.id_workday_office = id_workday_office;
         this.position = position;
-        this.start = start;
-        this.end = end;
     }
 
-    public Office(int id_office, int id_workday_office, String position, String start, String end, int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String start_join, int employee_id, double total_price_date, String time_start, String time_end) {
-        super(id, ID_card, fullname, gender, address, phone, birthday, start_join, employee_id, total_price_date, time_start, time_end);
+    public Office(int id_office, String position,String start,int id, String ID_card, String fullname, String gender, String address, String phone, String birthday, String salary) {
+        super(id, ID_card, fullname, gender, address, phone, birthday, salary);
         CheckException.checkNumberZero(id_office);
-        CheckException.checkNumberZero(id_workday_office);
         CheckException.checkCharacter(position);
-        CheckException.checkDate(start);
-        CheckException.checkDate(end);
         this.id_office = id_office;
-        this.id_workday_office = id_workday_office;
         this.position = position;
         this.start = start;
-        this.end = end;
     }
-    
+
+    public Office(int id_office, String position, int id, String ID_card, String fullname, String phone,String salary) {
+        super(id, ID_card, fullname, phone,salary);
+        CheckException.checkNumberZero(id_office);
+        CheckException.checkCharacter(position);
+        this.id_office = id_office;
+        this.position = position;
+    }
+
     public int getId_office() {
         return id_office;
     }
@@ -67,13 +59,12 @@ public class Office extends WorkDay{
         this.id_office = id_office;
     }
 
-    public int getId_workday_office() {
-        return id_workday_office;
+    public int getId_employee() {
+        return id_employee;
     }
 
-    public void setId_workday_office(int id_workday_office) {
-        CheckException.checkNumberZero(id_workday_office);
-        this.id_workday_office = id_workday_office;
+    public void setId_employee(int id_employee) {
+        this.id_employee = id_employee;
     }
 
     public String getPosition() {
