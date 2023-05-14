@@ -207,4 +207,108 @@ public class QuerryOffice {
         }
         close();
     }
+    
+    public static List<Office> selectSortPosition() {
+        List<Office> listOffice = new ArrayList<>();
+        open();
+        String sql = "SELECT employee.id,employee.ID_card,employee.fullname,employee.phone,office.id as office_id, office.position FROM office JOIN employee ON office.id_employee = employee.id ORDER BY office.position ASC";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Office office = null;
+            while (result.next()) {
+                office = new Office(
+                        result.getInt("office_id"),
+                        result.getString("position"),
+                        result.getInt("id"),
+                        result.getString("ID_card"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listOffice.add(office);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryOffice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listOffice;
+    }
+    
+    public static List<Office> selectSortPositionDesc() {
+        List<Office> listOffice = new ArrayList<>();
+        open();
+        String sql = "SELECT employee.id,employee.ID_card,employee.fullname,employee.phone,office.id as office_id, office.position FROM office JOIN employee ON office.id_employee = employee.id ORDER BY office.position DESC";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Office office = null;
+            while (result.next()) {
+                office = new Office(
+                        result.getInt("office_id"),
+                        result.getString("position"),
+                        result.getInt("id"),
+                        result.getString("ID_card"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listOffice.add(office);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryOffice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listOffice;
+    }
+    
+    public static List<Office> selectSortName() {
+        List<Office> listOffice = new ArrayList<>();
+        open();
+        String sql = "SELECT employee.id,employee.ID_card,employee.fullname,employee.phone,office.id as office_id, office.position FROM office JOIN employee ON office.id_employee = employee.id ORDER BY employee.fullname ASC";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Office office = null;
+            while (result.next()) {
+                office = new Office(
+                        result.getInt("office_id"),
+                        result.getString("position"),
+                        result.getInt("id"),
+                        result.getString("ID_card"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listOffice.add(office);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryOffice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listOffice;
+    }
+    
+    public static List<Office> selectSortNameDesc() {
+        List<Office> listOffice = new ArrayList<>();
+        open();
+        String sql = "SELECT employee.id,employee.ID_card,employee.fullname,employee.phone,office.id as office_id, office.position FROM office JOIN employee ON office.id_employee = employee.id ORDER BY employee.fullname DESC";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Office office = null;
+            while (result.next()) {
+                office = new Office(
+                        result.getInt("office_id"),
+                        result.getString("position"),
+                        result.getInt("id"),
+                        result.getString("ID_card"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listOffice.add(office);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryOffice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listOffice;
+    }
 }

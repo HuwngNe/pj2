@@ -18,6 +18,10 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(String salary) {
+        this.salary = salary;
+    }
+
     public Employee(int id, String ID_card, String fullname, String phone) {
         CheckException.checkNumberZero(id);
         CheckException.checkNumber(ID_card);

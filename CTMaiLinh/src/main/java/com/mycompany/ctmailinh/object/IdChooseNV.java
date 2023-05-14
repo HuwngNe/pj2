@@ -10,6 +10,7 @@ package com.mycompany.ctmailinh.object;
  */
 public class IdChooseNV {
     protected static int idChooseNV = -1;
+    protected static String salaryBasic = "-1";
 
     public IdChooseNV() {
     }
@@ -21,6 +22,15 @@ public class IdChooseNV {
     public static void setIdChooseNV(int idChooseNV) {
         IdChooseNV.idChooseNV = idChooseNV;
     }
+
+    public static String getSalaryBasic() {
+        return salaryBasic;
+    }
+
+    public static void setSalaryBasic(String salaryBasic) {
+        IdChooseNV.salaryBasic = salaryBasic;
+    }
+    
 }
 
     

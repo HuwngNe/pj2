@@ -225,17 +225,13 @@ public class NV extends javax.swing.JFrame {
 
     private void txtsortNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsortNVActionPerformed
         int option = txtsortNV.getSelectedIndex();
-        if (option == 0) {
-            dataList = QuerryOffice.selectSortPosition();
-        } else if (option == 1) {
-            dataList = QuerryOffice.selectSortPositionDesc();
-        } else if (option == 2) {
-            dataList = QuerryOffice.selectSortName();
-        } else if (option == 3) {
-            dataList = QuerryOffice.selectSortNameDesc();
-        } else {
-            dataList = QuerryOffice.select();
-        }
+        dataList = switch (option) {
+            case 0 -> QuerryOffice.selectSortPosition();
+            case 1 -> QuerryOffice.selectSortPositionDesc();
+            case 2 -> QuerryOffice.selectSortName();
+            case 3 -> QuerryOffice.selectSortNameDesc();
+            default -> QuerryOffice.select();
+        };
         showTable();
     }//GEN-LAST:event_txtsortNVActionPerformed
 
@@ -260,12 +256,12 @@ public class NV extends javax.swing.JFrame {
         if (idchoose == -1) {
             return;
         }
-        int a = Integer.valueOf(String.valueOf(nvtable.getValueAt(idchoose, 1)));
-        idchooseNV.setIdChooseNV(a);
+        int a = Integer.parseInt(String.valueOf(nvtable.getValueAt(idchoose, 1)));
+        IdChooseNV.setIdChooseNV(a);
     }//GEN-LAST:event_nvtableMouseClicked
 
     private void btndetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndetailActionPerformed
-        if (idchooseNV.getIdChooseNV() > 0) {
+        if (IdChooseNV.getIdChooseNV() > 0) {
             DetailNV detailnv = new DetailNV();
             detailnv.setVisible(true);
             setVisible(false);

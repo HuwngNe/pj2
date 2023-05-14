@@ -12,24 +12,17 @@ import com.mycompany.ctmailinh.libraly.CheckException;
  */
 public class Salary extends Employee{
     protected int id_salary,id_employee;
-    protected double salary,overtime,total_salary;
-    protected String date;
+    protected String date,overtime,total_salary;
 
     public Salary() {
     }
 
-    public Salary(int id_salary, int id_employee, double salary, double overtime, double total_salary, String date) {
-        CheckException.checkNumberZero(id_salary);
-        CheckException.checkNumberZero(id_employee);
-        CheckException.checkNumberZero(salary);
-        CheckException.checkNumberZero(total_salary);
-        CheckException.checkDate(date);
+    public Salary(int id_salary, int id_employee, String date, String overtime, String total_salary) {
         this.id_salary = id_salary;
         this.id_employee = id_employee;
-        this.salary = salary;
+        this.date = date;
         this.overtime = overtime;
         this.total_salary = total_salary;
-        this.date = date;
     }
 
     public int getId_salary() {
@@ -50,25 +43,30 @@ public class Salary extends Employee{
         this.id_employee = id_employee;
     }
 
-    public void setSalary(double salary) {
-        CheckException.checkNumberZero(salary);
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        CheckException.checkCharacterNumber(salary);
         this.salary = salary;
     }
 
-    public double getOvertime() {
+    public String getOvertime() {
         return overtime;
     }
 
-    public void setOvertime(double overtime) {
+    public void setOvertime(String overtime) {
+        CheckException.checkCharacterNumber(overtime);
         this.overtime = overtime;
     }
 
-    public double getTotal_salary() {
+    public String getTotal_salary() {
         return total_salary;
     }
 
-    public void setTotal_salary(double total_salary) {
-        CheckException.checkNumberZero(total_salary);
+    public void setTotal_salary(String total_salary) {
+        CheckException.checkCharacterNumber(total_salary);
         this.total_salary = total_salary;
     }
 
@@ -81,4 +79,10 @@ public class Salary extends Employee{
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "Salary{" + "id_salary=" + id_salary + ", id_employee=" + id_employee + ", date=" + date + ", overtime=" + overtime + ", total_salary=" + total_salary + '}';
+    }
+
+    
 }

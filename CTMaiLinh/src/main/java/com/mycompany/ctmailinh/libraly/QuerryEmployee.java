@@ -129,4 +129,24 @@ public class QuerryEmployee {
         close();
         return employee;
     }
+    
+    public static String selectSalary(int i) {
+        Employee employee = new Employee();
+        open();
+        String sql = "SELECT salary FROM employee WHERE id = "+i;
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                employee = new Employee(
+                        result.getString("salary")
+                );
+                break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return employee.getSalary();
+    }
 }

@@ -17,6 +17,12 @@ public class Customer {
     public Customer() {
     }
 
+    public Customer(int id, String fullname, String phone) {
+        this.id = id;
+        this.fullname = fullname;
+        this.phone = phone;
+    }
+
     public Customer(int id, String ID_card, String fullname, String gender, String address, String phone, String birthday) {
         CheckException.checkNumberZero(id);
         CheckException.checkNumber(ID_card);

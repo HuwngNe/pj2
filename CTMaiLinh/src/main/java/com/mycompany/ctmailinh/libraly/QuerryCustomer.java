@@ -98,12 +98,8 @@ public class QuerryCustomer {
             while (result.next()) {
                 customer = new Customer(
                         result.getInt("id"),
-                        result.getString("ID_card"),
                         result.getString("fullname"),
-                        result.getString("gender"),
-                        result.getString("address"),
-                        result.getString("phone"),
-                        result.getString("birthday")
+                        result.getString("phone")
                 );
                 listCustomer.add(customer);
             }

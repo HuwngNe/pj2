@@ -4,7 +4,6 @@
  */
 package com.mycompany.ctmailinh.programme;
 
-import com.mycompany.ctmailinh.libraly.CheckException;
 import com.mycompany.ctmailinh.libraly.HandleDate;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
 import com.mycompany.ctmailinh.object.IdChooseNV;

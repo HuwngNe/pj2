@@ -12,45 +12,31 @@ import com.mycompany.ctmailinh.libraly.CheckException;
  */
 public class Bonus extends Salary{
     protected int id_bonus,id_salary_bonus;
-    protected double pay;
-    protected String name;
+    protected String name,pay;
 
     public Bonus() {
     }
 
-    public Bonus(int id_salary_bonus, double pay, String name) {
+    
+    public Bonus(int id_salary_bonus, String pay, String name) {
         CheckException.checkNumberZero(id_salary_bonus);
-        CheckException.checkNumberZero(pay);
+        CheckException.checkCharacterNumber(pay);
         CheckException.checkCharacter(name);
         this.id_salary_bonus = id_salary_bonus;
         this.pay = pay;
         this.name = name;
     }
     
-    public Bonus(int id_bonus, int id_salary_bonus, double pay, String name) {
+    public Bonus(int id_bonus, int id_salary_bonus, String pay, String name) {
         CheckException.checkNumberZero(id_bonus);
         CheckException.checkNumberZero(id_salary_bonus);
-        CheckException.checkNumberZero(pay);
+        CheckException.checkCharacterNumber(pay);
         CheckException.checkCharacter(name);
         this.id_bonus = id_bonus;
         this.id_salary_bonus = id_salary_bonus;
         this.pay = pay;
         this.name = name;
     }
-
-    public Bonus(int id_bonus, int id_salary_bonus, double pay, String name, int id_salary, int id_employee, double salary, double overtime, double total_salary, String date) {
-        super(id_salary, id_employee, salary, overtime, total_salary, date);
-        CheckException.checkNumberZero(id_bonus);
-        CheckException.checkNumberZero(id_salary_bonus);
-        CheckException.checkNumberZero(pay);
-        CheckException.checkCharacter(name);
-        this.id_bonus = id_bonus;
-        this.id_salary_bonus = id_salary_bonus;
-        this.pay = pay;
-        this.name = name;
-    }
-
-    
 
     public int getId_bonus() {
         return id_bonus;
@@ -70,12 +56,12 @@ public class Bonus extends Salary{
         this.id_salary_bonus = id_salary_bonus;
     }
 
-    public double getPay() {
+    public String getPay() {
         return pay;
     }
 
-    public void setPay(double pay) {
-        CheckException.checkNumberZero(pay);
+    public void setPay(String pay) {
+        CheckException.checkCharacterNumber(pay);
         this.pay = pay;
     }
 
