@@ -51,9 +51,15 @@ public class QuerryCustomer {
     
     public static void insert(Customer customer) {
         open();
-        String sql = "insert into customer(ID_card,fullname,gender,birthday,address,phone) values ("+customer.getID_card()+","+customer.getFullname()+","+customer.getGender()+","+customer.getBirthday()+","+customer.getAddress()+","+customer.getPhone()+")";
+        String sql = "insert into customer(ID_card,fullname,gender,birthday,address,phone) values (?,?,?,?,?,?)";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, customer.getID_card());
+            statement.setString(2, customer.getFullname());
+            statement.setString(3, customer.getGender());
+            statement.setString(4, customer.getBirthday());
+            statement.setString(5, customer.getAddress());
+            statement.setString(6, customer.getPhone());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,12 +116,36 @@ public class QuerryCustomer {
         return listCustomer;
     }
     
-    public static void delete(int id) {
-        CheckException.checkNumberZero(id);
+    public static List<Customer> select(String name) {
+        List<Customer> listCustomer = new ArrayList<>();
         open();
-        String sql = "DELETE FROM customer WHERE id = "+id;
+        String sql = "SELECT * FROM customer WHERE fullname LIKE ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, "%"+name+"%");
+            ResultSet result = statement.executeQuery();
+            Customer customer = null;
+            while (result.next()) {
+                customer = new Customer(
+                        result.getInt("id"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listCustomer.add(customer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listCustomer;
+    }
+    
+    public static void delete(int id) {
+        open();
+        String sql = "DELETE FROM customer WHERE id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,13 +153,13 @@ public class QuerryCustomer {
         close();
     }
     
-    public static Customer find(String id) {
-        CheckException.checkCharacterNumber(id);
+    public static Customer find(int id) {
         Customer customer = null;
         open();
-        String sql = "SELECT * FROM customer WHERE id = "+id;
+        String sql = "SELECT * FROM customer WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 customer = new Customer(
@@ -152,14 +182,66 @@ public class QuerryCustomer {
     
     public static void editById(Customer customer) {
         open();
-        String sql = "UPDATE customer SET ID_card = "+customer.getID_card()+", fullname = "+customer.getFullname()+", gender = "+customer.getGender()+", address = "+customer.getAddress()+", phone = "+customer.getPhone()+", birthday = "+customer.getBirthday()+" WHERE id = "+customer.getId();
-        
+        String sql = "UPDATE customer SET ID_card = ?, fullname = ?, gender = ?, address = ?, phone = ?, birthday = ? WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, customer.getID_card());
+            statement.setString(2, customer.getFullname());
+            statement.setString(3, customer.getGender());
+            statement.setString(4, customer.getAddress());
+            statement.setString(5, customer.getPhone());
+            statement.setString(6, customer.getBirthday());
+            statement.setInt(7, customer.getId());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         close();
+    }
+  
+    public static List<Customer> selectSortAsc() {
+        List<Customer> listCustomer = new ArrayList<>();
+        open();
+        String sql = "SELECT * FROM customer ORDER BY fullname ASC";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Customer customer = null;
+            while (result.next()) {
+                customer = new Customer(
+                        result.getInt("id"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listCustomer.add(customer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listCustomer;
+    }
+    
+    public static List<Customer> selectSortDesc() {
+        List<Customer> listCustomer = new ArrayList<>();
+        open();
+        String sql = "SELECT * FROM customer ORDER BY fullname DESC";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Customer customer = null;
+            while (result.next()) {
+                customer = new Customer(
+                        result.getInt("id"),
+                        result.getString("fullname"),
+                        result.getString("phone")
+                );
+                listCustomer.add(customer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listCustomer;
     }
 }

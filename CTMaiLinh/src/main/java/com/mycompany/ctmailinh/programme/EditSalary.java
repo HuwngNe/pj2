@@ -5,16 +5,16 @@
 package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.QuerrySalary;
-import com.mycompany.ctmailinh.object.IdChooseSalary;
 import com.mycompany.ctmailinh.object.Salary;
 import com.mycompany.ctmailinh.libraly.HandleDate;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Windows
  */
 public class EditSalary extends javax.swing.JFrame {
-    IdChooseSalary idchoosesalary = new IdChooseSalary();
+    IdDataAdmin iddataad = new IdDataAdmin();
     String totalprice = "";
     /**
      * Creates new form EditSalary
@@ -25,7 +25,7 @@ public class EditSalary extends javax.swing.JFrame {
         addComboBoxDate();
         addComboBoxMonth();
         addComboBoxYear();
-        Salary salary = QuerrySalary.findById(idchoosesalary.getIdChooseSalary());
+        Salary salary = QuerrySalary.findById(iddataad.getIdChooseSalary());
         if (!"null".equals(salary.getOvertime())) {
             txtovertimeedit.setText(salary.getOvertime());
         }
@@ -180,7 +180,7 @@ public class EditSalary extends javax.swing.JFrame {
     }//GEN-LAST:event_txtyearsalaryeditActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        idchoosesalary.setIdChooseSalary(-1);
+        iddataad.setIdChooseSalary(-1);
         SalaryNV salarynv = new SalaryNV();
         salarynv.setVisible(true);
         setVisible(false);
@@ -206,7 +206,7 @@ public class EditSalary extends javax.swing.JFrame {
         String year = String.valueOf(txtyearsalaryedit.getSelectedItem());
         
         Salary salary = new Salary();
-        salary.setId_salary(idchoosesalary.getIdChooseSalary());
+        salary.setId_salary(iddataad.getIdChooseSalary());
         if (!"".equals(overtime)) {
             salary.setOvertime(overtime);
             salary.setTotal_salary(String.valueOf(Integer.parseInt(overtime)+Integer.parseInt(totalprice)));

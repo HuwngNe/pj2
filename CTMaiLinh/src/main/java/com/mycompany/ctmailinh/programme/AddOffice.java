@@ -6,9 +6,12 @@ package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.CheckException;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
-import com.mycompany.ctmailinh.object.IdChooseNV;
+import com.mycompany.ctmailinh.libraly.QuerryPosition;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Office;
+import com.mycompany.ctmailinh.object.Position;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Windows
  */
 public class AddOffice extends javax.swing.JFrame {
-    IdChooseNV id = new IdChooseNV();
+    IdDataAdmin iddataad = new IdDataAdmin();
     /**
      * Creates new form AddOffice
      */
@@ -26,8 +29,15 @@ public class AddOffice extends javax.swing.JFrame {
         addComboBoxDate();
         addComboBoxMonth();
         addComboBoxYear();
+        addPosition();
     }
 
+    private void addPosition() {
+        List<Position> ls = QuerryPosition.select();
+        for (Position l : ls) {
+            txtposition.addItem(l.getId()+" - "+l.getName());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,13 +50,13 @@ public class AddOffice extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtofficeadd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtdateofficeadd = new javax.swing.JComboBox<>();
         txtmonthofficeadd = new javax.swing.JComboBox<>();
         txtyearofficeadd = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        txtposition = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -107,7 +117,7 @@ public class AddOffice extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton1)
                                     .addComponent(txtyearofficeadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtofficeadd))))
+                            .addComponent(txtposition, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,7 +126,7 @@ public class AddOffice extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtofficeadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -142,7 +152,8 @@ public class AddOffice extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String position  = txtofficeadd.getText();
+        String[] po = String.valueOf(txtposition.getSelectedItem()).split(" - ");
+        String position  = po[0];
         String checkdate = (String) txtdateofficeadd.getSelectedItem();
         String date = "";
         if (checkdate.length() == 1) {
@@ -161,7 +172,7 @@ public class AddOffice extends javax.swing.JFrame {
         CheckException.checkDate(date+"-"+month+"-"+year);
         if (!position.equals("") && !date.equals("") && !month.equals("") && !year.equals("")) {
             Office office = new Office();
-            office.setId_employee(id.getIdChooseNV());
+            office.setId_employee(iddataad.getIdChooseNV());
             office.setPosition(position);
             office.setStart(date+"-"+month+"-"+year);
             QuerryOffice.insert(office);
@@ -223,7 +234,7 @@ public class AddOffice extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> txtdateofficeadd;
     private javax.swing.JComboBox<String> txtmonthofficeadd;
-    private javax.swing.JTextField txtofficeadd;
+    private javax.swing.JComboBox<String> txtposition;
     private javax.swing.JComboBox<String> txtyearofficeadd;
     // End of variables declaration//GEN-END:variables
 

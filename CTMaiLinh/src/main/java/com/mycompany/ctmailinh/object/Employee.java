@@ -22,6 +22,11 @@ public class Employee {
         this.salary = salary;
     }
 
+    public Employee(int id, String fullname) {
+        this.id = id;
+        this.fullname = fullname;
+    }
+
     public Employee(int id, String ID_card, String fullname, String phone) {
         CheckException.checkNumberZero(id);
         CheckException.checkNumber(ID_card);

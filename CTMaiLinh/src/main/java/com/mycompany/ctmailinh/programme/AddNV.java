@@ -7,8 +7,11 @@ package com.mycompany.ctmailinh.programme;
 import com.mycompany.ctmailinh.libraly.CheckException;
 import com.mycompany.ctmailinh.libraly.QuerryEmployee;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
+import com.mycompany.ctmailinh.libraly.QuerryPosition;
 import com.mycompany.ctmailinh.object.Employee;
 import com.mycompany.ctmailinh.object.Office;
+import com.mycompany.ctmailinh.object.Position;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -27,8 +30,15 @@ public class AddNV extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         txtmale.setSelected(true);
         addComboBoxYearBirthday();
+        addPosition();
     }
 
+    private void addPosition() {
+        List<Position> ls = QuerryPosition.select();
+        for (Position l : ls) {
+            txtposition.addItem(l.getId()+" - "+l.getName());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,9 +75,9 @@ public class AddNV extends javax.swing.JFrame {
         txtmonthjoin = new javax.swing.JComboBox<>();
         txtyearjoin = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        txtposition = new javax.swing.JTextField();
         txtsalary = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        txtposition = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,7 +120,6 @@ public class AddNV extends javax.swing.JFrame {
         txtmonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12" }));
         txtmonth.setSelectedIndex(-1);
 
-        txtyear.setSelectedIndex(-1);
         txtyear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtyearActionPerformed(evt);
@@ -154,8 +163,6 @@ public class AddNV extends javax.swing.JFrame {
 
         txtmonthjoin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12" }));
         txtmonthjoin.setSelectedIndex(-1);
-
-        txtyearjoin.setSelectedIndex(-1);
 
         jLabel9.setText("Vị trí:");
 
@@ -203,15 +210,17 @@ public class AddNV extends javax.swing.JFrame {
                             .addComponent(txtcmnd)
                             .addComponent(txtaddressAddTitle)
                             .addComponent(txtphone)
-                            .addComponent(txtposition)
+                            .addComponent(txtsalary)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtdatejoin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(txtmonthjoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtyearjoin, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 4, Short.MAX_VALUE))
-                            .addComponent(txtsalary))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtposition, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtdatejoin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(txtmonthjoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtyearjoin, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 4, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -253,8 +262,8 @@ public class AddNV extends javax.swing.JFrame {
                     .addComponent(txtyearjoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(txtposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -351,7 +360,8 @@ public class AddNV extends javax.swing.JFrame {
         String yearJoin = (String) txtyearjoin.getSelectedItem();
         CheckException.checkDate(dateJoin+"-"+monthJoin+"-"+yearJoin);
         
-        String position = txtposition.getText();
+        String[] po = String.valueOf(txtposition.getSelectedItem()).split(" - ");
+        String position = po[0];
         String salary = txtsalary.getText();
         String regexNumber = "[0-9]+";
         Pattern pattern = Pattern.compile(regexNumber);
@@ -460,7 +470,7 @@ public class AddNV extends javax.swing.JFrame {
     private javax.swing.JTextField txtname;
     private javax.swing.JRadioButton txtorther;
     private javax.swing.JTextField txtphone;
-    private javax.swing.JTextField txtposition;
+    private javax.swing.JComboBox<String> txtposition;
     private javax.swing.JTextField txtsalary;
     private javax.swing.JComboBox<String> txtyear;
     private javax.swing.JComboBox<String> txtyearjoin;

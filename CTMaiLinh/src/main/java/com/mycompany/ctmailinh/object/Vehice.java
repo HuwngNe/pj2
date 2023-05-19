@@ -13,21 +13,39 @@ import java.util.Scanner;
  */
 public class Vehice {
     protected int id,number_of_seats,status;
-    protected String name,testing_date,color,license_plates;
-    protected double price;
+    protected String name,testing_date,color,license_plates,price,sit;
 
     public Vehice() {
     }
 
-    public Vehice(int id, int number_of_seats, int status, String name, String testing_date, String color, String license_plates, double price) {
-        CheckException.checkNumberZero(id);
-        CheckException.checkNumberZero(number_of_seats);
-        CheckException.checkStatus(status);
-        CheckException.checkCharacterNumber(name);
-        CheckException.checkDate(testing_date);
-        CheckException.checkCharacter(color);
-        CheckException.checkCharacterNumber(license_plates);
-        CheckException.checkNumberZero(price);
+    public Vehice(int id, String price) {
+        this.id = id;
+        this.price = price;
+    }
+
+    public Vehice(String name) {
+        this.name = name;
+    }
+
+    public Vehice(int id, String sit, int number_of_seats, String name) {
+        this.id = id;
+        this.sit = sit;
+        this.number_of_seats = number_of_seats;
+        this.name = name;
+    }
+
+    public Vehice(int id, int number_of_seats, String name, String testing_date, String color, String license_plates, String price, String sit) {
+        this.id = id;
+        this.number_of_seats = number_of_seats;
+        this.name = name;
+        this.testing_date = testing_date;
+        this.color = color;
+        this.license_plates = license_plates;
+        this.price = price;
+        this.sit = sit;
+    }
+
+    public Vehice(int id, int number_of_seats, int status, String name, String testing_date, String color, String license_plates, String price) {
         this.id = id;
         this.number_of_seats = number_of_seats;
         this.status = status;
@@ -38,25 +56,18 @@ public class Vehice {
         this.price = price;
     }
 
-    public Vehice(int number_of_seats, int status, String name, String testing_date, String color, String license_plates, double price) {
-        CheckException.checkNumberZero(number_of_seats);
-        CheckException.checkStatus(status);
-        CheckException.checkCharacterNumber(name);
-        CheckException.checkDate(testing_date);
-        CheckException.checkCharacter(color);
-        CheckException.checkCharacterNumber(license_plates);
-        CheckException.checkNumberZero(price);
-        this.number_of_seats = number_of_seats;
-        this.status = status;
-        this.name = name;
-        this.testing_date = testing_date;
-        this.color = color;
-        this.license_plates = license_plates;
-        this.price = price;
+    public String getSit() {
+        return sit;
     }
-    
-    
-    
+
+    public void setSit(String sit) {
+        this.sit = sit;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -111,19 +122,18 @@ public class Vehice {
     }
 
     public void setLicense_plates(String license_plates) {
-        CheckException.checkCharacterNumber(license_plates);
         this.license_plates = license_plates;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        CheckException.checkNumberZero(price);
+    public void setPrice(String price) {
+        CheckException.checkCharacterNumber(price);
         this.price = price;
     }
-    
+
     public void input() {
         Scanner sc = new Scanner(System.in);
         
@@ -147,9 +157,6 @@ public class Vehice {
         license_plates = sc.nextLine();
         CheckException.checkCharacterNumber(license_plates);
         
-        System.out.println("Priced for 1 hour:");
-        price = Double.parseDouble(sc.nextLine());
-        CheckException.checkNumberZero(price);
         
         System.out.println("Vehicle condition:");
         System.out.println("1. Empty");

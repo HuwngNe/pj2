@@ -4,11 +4,14 @@
  */
 package com.mycompany.ctmailinh.programme;
 
+import com.mycompany.ctmailinh.libraly.QuerryAccount;
 import com.mycompany.ctmailinh.libraly.QuerryCustomer;
+import com.mycompany.ctmailinh.libraly.QuerryHire;
 import com.mycompany.ctmailinh.object.Customer;
-import com.mycompany.ctmailinh.object.IdChooseCustomer;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class KH extends javax.swing.JFrame {
-    IdChooseCustomer idchoosecustomer = new IdChooseCustomer();
+    IdDataAdmin iddataad = new IdDataAdmin();
     DefaultTableModel tableModel;
     List<Customer> dataList = new ArrayList<>();
     /**
@@ -60,7 +63,10 @@ public class KH extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtsortcus = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        txtsearch = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablecustomer = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -71,28 +77,64 @@ public class KH extends javax.swing.JFrame {
         jLabel1.setText("Quản lý khách hàng");
 
         jButton2.setText("Xoá");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Sửa");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Xem");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp theo tên khách hàng (a->z)", "Sắp xếp theo tên khách hàng (z->a)" }));
-        jComboBox1.setSelectedIndex(-1);
+        txtsortcus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp theo tên khách hàng (a->z)", "Sắp xếp theo tên khách hàng (z->a)" }));
+        txtsortcus.setSelectedIndex(-1);
+        txtsortcus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsortcusActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Tìm kiếm tên khách:");
+
+        jButton4.setText("Tìm");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(118, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtsortcus, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jButton5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton2))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -103,8 +145,13 @@ public class KH extends javax.swing.JFrame {
                     .addComponent(jButton3)
                     .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addComponent(txtsortcus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         tablecustomer.setModel(new javax.swing.table.DefaultTableModel(
@@ -198,8 +245,63 @@ public class KH extends javax.swing.JFrame {
             return;
         }
         int a = Integer.parseInt(String.valueOf(tablecustomer.getValueAt(mousechoose, 1)));
-        idchoosecustomer.setIdchoosecustomer(a);
+        iddataad.setIdChooseCustomer(a);
     }//GEN-LAST:event_tablecustomerMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (iddataad.getIdChooseCustomer()!= -1) {
+            EditCustomer editcus = new EditCustomer();
+            editcus.setVisible(true);
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Hãy chọn khách hàng muốn sửa","Lỗi",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (iddataad.getIdChooseCustomer() != -1) {
+            int option = JOptionPane.showConfirmDialog(rootPane,
+                        "Bạn có chắc muốn xoá xe này không ?",
+                        "Xác nhận",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+            if (option == 0) {
+                QuerryHire.deleteByIdCus(iddataad.getIdChooseCustomer());
+                QuerryAccount.deleteByIdCus(iddataad.getIdChooseCustomer());
+                QuerryCustomer.delete(iddataad.getIdChooseCustomer());
+                JOptionPane.showMessageDialog(rootPane, "Xoá thành công");
+                showNewData();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Hãy chọn khách hàng muốn xoá");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (iddataad.getIdChooseCustomer() != -1) {
+            DetailKH detailkh = new DetailKH();
+            detailkh.setVisible(true);
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Hãy chọn khách hàng muốn xem","Lỗi",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void txtsortcusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsortcusActionPerformed
+        int option = txtsortcus.getSelectedIndex();
+        dataList = switch (option) {
+            case 0 -> QuerryCustomer.selectSortAsc();
+            case 1 -> QuerryCustomer.selectSortDesc();
+            default -> QuerryCustomer.select();
+        };
+        showTable();
+    }//GEN-LAST:event_txtsortcusActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String search = txtsearch.getText();
+        dataList = QuerryCustomer.select(search);
+        showTable();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,11 +342,14 @@ public class KH extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablecustomer;
+    private javax.swing.JTextField txtsearch;
+    private javax.swing.JComboBox<String> txtsortcus;
     // End of variables declaration//GEN-END:variables
 }

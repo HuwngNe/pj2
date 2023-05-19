@@ -51,9 +51,12 @@ public class QuerryBonus {
     
     public static void insert(Bonus b) {
         open();
-        String sql = "INSERT INTO bonus(id_salary,name,pay) VALUES ("+b.getId_salary_bonus()+",'"+b.getName()+"','"+b.getPay()+"')";
+        String sql = "INSERT INTO bonus(id_salary,name,pay) VALUES (?,?,?)";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, b.getId_salary_bonus());
+            statement.setString(2, b.getName());
+            statement.setString(3, b.getPay());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryBonus.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,9 +68,10 @@ public class QuerryBonus {
         List<Bonus> lsBonus = new ArrayList<>();
         Bonus bonus = null;
         open();
-        String sql = "SELECT * FROM bonus WHERE id_salary = "+id;
+        String sql = "SELECT * FROM bonus WHERE id_salary = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 bonus = new Bonus(
@@ -88,9 +92,10 @@ public class QuerryBonus {
     public static Bonus findById(int id) {
         Bonus bonus = null;
         open();
-        String sql = "SELECT * FROM bonus WHERE id = "+id;
+        String sql = "SELECT * FROM bonus WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 bonus = new Bonus(
@@ -110,9 +115,12 @@ public class QuerryBonus {
     
     public static void update(Bonus b) {
         open();
-        String sql = "UPDATE bonus SET name = '"+b.getName()+"',pay = '"+b.getPay()+"' WHERE id = "+b.getId_bonus();
+        String sql = "UPDATE bonus SET name = ?,pay = ? WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, b.getName());
+            statement.setString(2, b.getPay());
+            statement.setInt(3, b.getId_bonus());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryBonus.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,9 +130,10 @@ public class QuerryBonus {
     
     public static void delete(int id) {
         open();
-        String sql = "DELETE FROM bonus WHERE id = "+id;
+        String sql = "DELETE FROM bonus WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryBonus.class.getName()).log(Level.SEVERE, null, ex);

@@ -8,9 +8,12 @@ import com.mycompany.ctmailinh.libraly.CheckException;
 import com.mycompany.ctmailinh.libraly.HandleDate;
 import com.mycompany.ctmailinh.libraly.QuerryEmployee;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
+import com.mycompany.ctmailinh.libraly.QuerryPosition;
 import com.mycompany.ctmailinh.object.Employee;
-import com.mycompany.ctmailinh.object.IdChooseNV;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Office;
+import com.mycompany.ctmailinh.object.Position;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -21,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class EditNV extends javax.swing.JFrame {
     int idOffice;
-    IdChooseNV idchoose = new IdChooseNV();
+    IdDataAdmin iddataad = new IdDataAdmin();
     /**
      * Creates new form EditNV
      */
@@ -29,7 +32,8 @@ public class EditNV extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         addComboBoxYearBirthday();
-        Office office = QuerryOffice.findById(idchoose.getIdChooseNV());
+        addPosition();
+        Office office = QuerryOffice.findById(iddataad.getIdChooseNV());
         idOffice = office.getId_office();
         txtnameEdit.setText(office.getFullname());
         txtcmndEdit.setText(office.getID_card());
@@ -40,7 +44,9 @@ public class EditNV extends javax.swing.JFrame {
         }
         txtaddressEdit.setText(office.getAddress());
         txtphoneEdit.setText(office.getPhone());
-        txtpositionEdit.setText(office.getPosition());
+        
+        Position po = QuerryPosition.findByName(office.getPosition());
+        txtposition.setSelectedItem(po.getId()+" - "+po.getName());
         txtsalaryEdit.setText(office.getSalary());
         String[] date = office.getBirthday().split("-");
         HandleDate handle = new HandleDate();
@@ -51,6 +57,12 @@ public class EditNV extends javax.swing.JFrame {
         txtdatejoinEdit.setSelectedItem(handle.dateString(dateJoin[0]));
         txtmonthjoinEdit.setSelectedItem("Tháng "+handle.dateString(dateJoin[1]));
         txtyearjoinEdit.setSelectedItem(handle.dateString(dateJoin[2]));
+    }
+    private void addPosition() {
+        List<Position> ls = QuerryPosition.select();
+        for (Position l : ls) {
+            txtposition.addItem(l.getId()+" - "+l.getName());
+        }
     }
     
     private void addComboBoxYearBirthday() {
@@ -97,9 +109,9 @@ public class EditNV extends javax.swing.JFrame {
         txtmonthjoinEdit = new javax.swing.JComboBox<>();
         txtyearjoinEdit = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
-        txtpositionEdit = new javax.swing.JTextField();
         txtsalaryEdit = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
+        txtposition = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,8 +154,6 @@ public class EditNV extends javax.swing.JFrame {
         txtmonthEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12" }));
         txtmonthEdit.setSelectedIndex(-1);
 
-        txtyearEdit.setSelectedIndex(-1);
-
         jLabel14.setText("CMND/CCCD:");
 
         txtcmndEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -181,8 +191,6 @@ public class EditNV extends javax.swing.JFrame {
 
         txtmonthjoinEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12" }));
         txtmonthjoinEdit.setSelectedIndex(-1);
-
-        txtyearjoinEdit.setSelectedIndex(-1);
 
         jLabel18.setText("Vị trí:");
 
@@ -230,15 +238,17 @@ public class EditNV extends javax.swing.JFrame {
                             .addComponent(txtcmndEdit)
                             .addComponent(txtaddressEditTitle)
                             .addComponent(txtphoneEdit)
-                            .addComponent(txtpositionEdit)
+                            .addComponent(txtsalaryEdit)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtdatejoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(txtmonthjoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtyearjoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 4, Short.MAX_VALUE))
-                            .addComponent(txtsalaryEdit))))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtposition, javax.swing.GroupLayout.Alignment.LEADING, 0, 306, Short.MAX_VALUE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtdatejoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(txtmonthjoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtyearjoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 4, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -280,8 +290,8 @@ public class EditNV extends javax.swing.JFrame {
                     .addComponent(txtyearjoinEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpositionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
+                    .addComponent(jLabel18)
+                    .addComponent(txtposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -341,8 +351,7 @@ public class EditNV extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        IdChooseNV id = new IdChooseNV();
-        id.setIdChooseNV(-1);
+        iddataad.setIdChooseNV(-1);
         NV nv = new NV();
         nv.setVisible(true);
         setVisible(false);
@@ -398,7 +407,8 @@ public class EditNV extends javax.swing.JFrame {
         String yearJoin = (String) txtyearjoinEdit.getSelectedItem();
         CheckException.checkDate(dateJoin+"-"+monthJoin+"-"+yearJoin);
         
-        String position = txtpositionEdit.getText();
+        String[] po = String.valueOf(txtposition.getSelectedItem()).split(" - ");
+        String position = po[0];
         String salary = txtsalaryEdit.getText();
         String regexNumber = "[0-9]+";
         Pattern pattern = Pattern.compile(regexNumber);
@@ -416,7 +426,7 @@ public class EditNV extends javax.swing.JFrame {
                 em.setBirthday(date+"-"+month+"-"+year);
                 em.setPhone(phone);
                 em.setSalary(salary);
-                QuerryEmployee.update(em, idchoose.getIdChooseNV());
+                QuerryEmployee.update(em, iddataad.getIdChooseNV());
                 Office off = new Office();
                 off.setId_office(idOffice);
                 off.setPosition(position);
@@ -508,7 +518,7 @@ public class EditNV extends javax.swing.JFrame {
     private javax.swing.JTextField txtnameEdit;
     private javax.swing.JRadioButton txtortherEdit;
     private javax.swing.JTextField txtphoneEdit;
-    private javax.swing.JTextField txtpositionEdit;
+    private javax.swing.JComboBox<String> txtposition;
     private javax.swing.JTextField txtsalaryEdit;
     private javax.swing.JComboBox<String> txtyearEdit;
     private javax.swing.JComboBox<String> txtyearjoinEdit;

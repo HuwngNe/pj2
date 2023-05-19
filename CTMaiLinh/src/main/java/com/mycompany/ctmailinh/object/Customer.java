@@ -24,12 +24,6 @@ public class Customer {
     }
 
     public Customer(int id, String ID_card, String fullname, String gender, String address, String phone, String birthday) {
-        CheckException.checkNumberZero(id);
-        CheckException.checkNumber(ID_card);
-        CheckException.checkCharacter(fullname);
-        CheckException.checkGender(gender);
-        CheckException.checkPhone(phone);
-        CheckException.checkDate(birthday);
         this.id = id;
         this.ID_card = ID_card;
         this.fullname = fullname;
@@ -51,6 +45,10 @@ public class Customer {
         this.address = address;
         this.phone = phone;
         this.birthday = birthday;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {

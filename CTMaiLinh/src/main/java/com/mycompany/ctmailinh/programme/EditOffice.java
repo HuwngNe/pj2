@@ -6,9 +6,11 @@ package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.HandleDate;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
-import com.mycompany.ctmailinh.object.IdChooseNV;
-import com.mycompany.ctmailinh.object.IdChooseOffice;
+import com.mycompany.ctmailinh.libraly.QuerryPosition;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Office;
+import com.mycompany.ctmailinh.object.Position;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Windows
  */
 public class EditOffice extends javax.swing.JFrame {
-    IdChooseNV idchooseNV = new IdChooseNV();
+    IdDataAdmin iddataad = new IdDataAdmin();
     /**
      * Creates new form EditOffice
      */
@@ -26,10 +28,11 @@ public class EditOffice extends javax.swing.JFrame {
         addComboBoxDate();
         addComboBoxMonth();
         addComboBoxYear();
-        IdChooseOffice idchooseOff = new IdChooseOffice();
-        Office office = QuerryOffice.findByIdPk(idchooseOff.getIdChooseOffice());
-        txtpositionofficeedit.setText(office.getPosition());
+        addPosition();
+        Office office = QuerryOffice.findByIdPk(iddataad.getIdChooseOff());
         
+        Position po = QuerryPosition.findById(Integer.parseInt(office.getPosition()));
+        txtposition.setSelectedItem(po.getId()+" - "+po.getName());
         String[] dateSt = office.getStart().split("-");
         HandleDate handle = new HandleDate();
         txtdateofficestedit.setSelectedItem(handle.dateString(dateSt[0]));
@@ -41,6 +44,13 @@ public class EditOffice extends javax.swing.JFrame {
             txtdateofficeededit.setSelectedItem(handle.dateString(dateEd[0]));
             txtmonthofficeededit.setSelectedItem("Tháng "+handle.dateString(dateEd[1]));
             txtyearofficeededit.setSelectedItem(handle.dateString(dateEd[2]));
+        }
+    }
+    
+    private void addPosition() {
+        List<Position> ls = QuerryPosition.select();
+        for (Position l : ls) {
+            txtposition.addItem(l.getId()+" - "+l.getName());
         }
     }
     
@@ -76,7 +86,6 @@ public class EditOffice extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtpositionofficeedit = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtdateofficestedit = new javax.swing.JComboBox<>();
         txtmonthofficestedit = new javax.swing.JComboBox<>();
@@ -87,6 +96,7 @@ public class EditOffice extends javax.swing.JFrame {
         txtyearofficeededit = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        txtposition = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,30 +136,29 @@ public class EditOffice extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtdateofficeededit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtmonthofficeededit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtyearofficeededit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtdateofficestedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtmonthofficestedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtyearofficestedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtpositionofficeedit))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtdateofficeededit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtmonthofficeededit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtyearofficeededit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtdateofficestedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtmonthofficestedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtyearofficestedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(txtposition, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -162,7 +171,7 @@ public class EditOffice extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtpositionofficeedit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -189,7 +198,7 @@ public class EditOffice extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
                 .addComponent(jLabel1)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,16 +222,15 @@ public class EditOffice extends javax.swing.JFrame {
     }//GEN-LAST:event_txtdateofficesteditActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        IdChooseOffice idchooseOff = new IdChooseOffice();
-        idchooseOff.setIdChooseOffice(-1);
+        iddataad.setIdChooseOff(-1);
         DetailNV detailNV = new DetailNV();
         detailNV.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        IdChooseOffice idchooseOff = new IdChooseOffice();
-        String position = txtpositionofficeedit.getText();
+        String[] po = String.valueOf(txtposition.getSelectedItem()).split(" - ");
+        String position = po[0];
         
         String checkDate =  String.valueOf(txtdateofficestedit.getSelectedItem());
         String dateSt = "";
@@ -258,8 +266,8 @@ public class EditOffice extends javax.swing.JFrame {
         
         if (!position.equals("")) {
             Office office = new Office();
-            office.setId_office(idchooseOff.getIdChooseOffice());
-            office.setId_employee(idchooseNV.getIdChooseNV());
+            office.setId_office(iddataad.getIdChooseOff());
+            office.setId_employee(iddataad.getIdChooseNV());
             office.setPosition(position);
             office.setStart(dateSt+"-"+monthSt+"-"+yearSt);
             if (!checkDateEd.equalsIgnoreCase("1") && !checkMonthEd[1].equalsIgnoreCase("1") && !yearEd.equalsIgnoreCase("2000")) {
@@ -319,7 +327,7 @@ public class EditOffice extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> txtdateofficestedit;
     private javax.swing.JComboBox<String> txtmonthofficeededit;
     private javax.swing.JComboBox<String> txtmonthofficestedit;
-    private javax.swing.JTextField txtpositionofficeedit;
+    private javax.swing.JComboBox<String> txtposition;
     private javax.swing.JComboBox<String> txtyearofficeededit;
     private javax.swing.JComboBox<String> txtyearofficestedit;
     // End of variables declaration//GEN-END:variables

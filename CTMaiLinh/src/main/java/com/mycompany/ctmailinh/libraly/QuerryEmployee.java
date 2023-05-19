@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,11 +49,18 @@ public class QuerryEmployee {
         conn = null;
     }
     
-    public static void insert(Employee employee) {
+    public static void insert(Employee e) {
         open();
-        String sql = "insert into employee(ID_card,fullname,gender,birthday,address,phone,salary) values ('"+employee.getID_card()+"','"+employee.getFullname()+"','"+employee.getGender()+"','"+employee.getBirthday()+"','"+employee.getAddress()+"','"+employee.getPhone()+"','"+employee.getSalary()+"')";
+        String sql = "insert into employee(ID_card,fullname,gender,birthday,address,phone,salary) values (?,?,?,?,?,?,?)";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, e.getID_card());
+            statement.setString(2, e.getFullname());
+            statement.setString(3, e.getGender());
+            statement.setString(4, e.getBirthday());
+            statement.setString(5, e.getAddress());
+            statement.setString(6, e.getPhone());
+            statement.setString(7, e.getSalary());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,13 +68,20 @@ public class QuerryEmployee {
         close();
     }
     
-    public static int insertGetId(Employee employee) {
+    public static int insertGetId(Employee e) {
         open();
-        String sql = "insert into employee(ID_card,fullname,gender,birthday,address,phone,salary) values ('"+employee.getID_card()+"','"+employee.getFullname()+"','"+employee.getGender()+"','"+employee.getBirthday()+"','"+employee.getAddress()+"','"+employee.getPhone()+"','"+employee.getSalary()+"')";
+        String sql = "insert into employee(ID_card,fullname,gender,birthday,address,phone,salary) values (?,?,?,?,?,?,?)";
         String[] returnId = { "BATCHID" };
         int key = -1;
         try {
             statement = conn.prepareStatement(sql,returnId);
+            statement.setString(1, e.getID_card());
+            statement.setString(2, e.getFullname());
+            statement.setString(3, e.getGender());
+            statement.setString(4, e.getBirthday());
+            statement.setString(5, e.getAddress());
+            statement.setString(6, e.getPhone());
+            statement.setString(7, e.getSalary());
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
@@ -81,9 +97,10 @@ public class QuerryEmployee {
     public static void delete(int id) {
         CheckException.checkNumberZero(id);
         open();
-        String sql = "DELETE FROM employee WHERE id = "+id;
+        String sql = "DELETE FROM employee WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,9 +110,17 @@ public class QuerryEmployee {
     
     public static void update(Employee e,int id) {
         open();
-        String sql = "UPDATE employee SET ID_card = '"+e.getID_card()+"', fullname = '"+e.getFullname()+"', gender = '"+e.getGender()+"', birthday = '"+e.getBirthday()+"', address = '"+e.getAddress()+"', phone = '"+e.getPhone()+"', salary = '"+e.getSalary()+"' WHERE id = "+id;
+        String sql = "UPDATE employee SET ID_card = ?, fullname = ?, gender = ?, birthday = ?, address = ?, phone = ?, salary = ? WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, e.getID_card());
+            statement.setString(2, e.getFullname());
+            statement.setString(3, e.getGender());
+            statement.setString(4, e.getBirthday());
+            statement.setString(5, e.getAddress());
+            statement.setString(6, e.getPhone());
+            statement.setString(7, e.getSalary());
+            statement.setInt(8, id);
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,9 +131,10 @@ public class QuerryEmployee {
     public static Employee findById(int id) {
         Employee employee = new Employee();
         open();
-        String sql = "SELECT * FROM employee WHERE id = "+id;
+        String sql = "SELECT * FROM employee WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 employee = new Employee(
@@ -133,9 +159,10 @@ public class QuerryEmployee {
     public static String selectSalary(int i) {
         Employee employee = new Employee();
         open();
-        String sql = "SELECT salary FROM employee WHERE id = "+i;
+        String sql = "SELECT salary FROM employee WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, i);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 employee = new Employee(
@@ -148,5 +175,90 @@ public class QuerryEmployee {
         }
         close();
         return employee.getSalary();
+    }
+    
+    public static void update(Employee e) {
+        open();
+        String sql = "UPDATE employee SET ID_card = ?, fullname = ?, gender = ?, birthday = ?, address = ?, phone = ? WHERE id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, e.getID_card());
+            statement.setString(2, e.getFullname());
+            statement.setString(3, e.getGender());
+            statement.setString(4, e.getBirthday());
+            statement.setString(5, e.getAddress());
+            statement.setString(6, e.getPhone());
+            statement.setInt(7, e.getId());
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+    }
+    
+    public static List<Employee> selectDriver() {
+        List<Employee> ls = new ArrayList<>();
+        Employee employee = null;
+        open();
+        String sql = "SELECT employee.fullname, employee.id FROM employee JOIN office ON office.id_employee = employee.id WHERE office.position_id = 4 AND employee.status_id = 1";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                employee = new Employee(
+                    result.getInt("id"),
+                    result.getString("fullname")
+                );
+                ls.add(employee);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return ls;
+    }
+    
+    public static String findReturnName(int id) {
+        Employee employee = null;
+        open();
+        String sql = "SELECT id,fullname FROM employee WHERE id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                employee = new Employee(
+                    result.getInt("id"),
+                    result.getString("fullname")
+                );
+                break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return employee.getFullname();
+    }
+    
+    public static List<Employee> select() {
+        List<Employee> ls = new ArrayList<>();
+        Employee employee = null;
+        open();
+        String sql = "SELECT employee.fullname, employee.id FROM employee";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                employee = new Employee(
+                    result.getInt("id"),
+                    result.getString("fullname")
+                );
+                ls.add(employee);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return ls;
     }
 }

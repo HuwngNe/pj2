@@ -6,7 +6,7 @@ package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.QuerryBonus;
 import com.mycompany.ctmailinh.object.Bonus;
-import com.mycompany.ctmailinh.object.IdChooseBonus;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
  * @author Windows
  */
 public class EditBonus extends javax.swing.JFrame {
-    IdChooseBonus idchooseb = new IdChooseBonus();
+    IdDataAdmin iddataad = new IdDataAdmin();
     /**
      * Creates new form EditBonus
      */
     public EditBonus() {
         initComponents();
         setLocationRelativeTo(null);
-        Bonus bonus = QuerryBonus.findById(idchooseb.getIdchoosebonus());
+        Bonus bonus = QuerryBonus.findById(iddataad.getIdChooseBonus());
         txttitlebonusedit.setText(bonus.getName());
         txtpricebonusedit.setText(bonus.getPay());
     }
@@ -133,7 +133,7 @@ public class EditBonus extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        idchooseb.setIdchoosebonus(-1);
+        iddataad.setIdChooseBonus(-1);
         DetailSalary detailsalary = new DetailSalary();
         detailsalary.setVisible(true);
         setVisible(false);
@@ -146,7 +146,7 @@ public class EditBonus extends javax.swing.JFrame {
             Bonus bonus = new Bonus();
             bonus.setName(name);
             bonus.setPay(price);
-            bonus.setId_bonus(idchooseb.getIdchoosebonus());
+            bonus.setId_bonus(iddataad.getIdChooseBonus());
             QuerryBonus.update(bonus);
             JOptionPane.showMessageDialog(rootPane, "Sửa thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         } else {

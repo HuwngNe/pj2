@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -53,9 +51,16 @@ public class QuerryVehice {
     
     public static void insert(Vehice vehice) {
         open();
-        String sql = "insert into vehice(name,testing_date,number_of_seats,color,license_plates,price,status) values ("+vehice.getName()+","+vehice.getTesting_date()+","+vehice.getNumber_of_seats()+","+vehice.getColor()+","+vehice.getLicense_plates()+","+vehice.getPrice()+","+vehice.getStatus()+")";
+        String sql = "insert into vehice(name,testing_date,number_of_seats,color,license_plates,price,status) values (?,?,?,?,?,?,?)";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setString(1, vehice.getName());
+            statement.setString(2, vehice.getTesting_date());
+            statement.setInt(3, vehice.getNumber_of_seats());
+            statement.setString(4, vehice.getColor());
+            statement.setString(5, vehice.getLicense_plates());
+            statement.setString(6, vehice.getPrice());
+            statement.setInt(7, vehice.getStatus());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +71,7 @@ public class QuerryVehice {
     public static List<Vehice> select() {
         List<Vehice> listVehice = new ArrayList<>();
         open();
-        String sql = "SELECT * FROM vehice";
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status";
         try {
             statement = conn.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
@@ -74,13 +79,154 @@ public class QuerryVehice {
             while (result.next()) {
                 vehice = new Vehice(
                         result.getInt("id"),
+                        result.getString("status_name"),
                         result.getInt("number_of_seats"),
-                        result.getInt("status"),
-                        result.getString("name"),
-                        result.getString("testing_date"),
-                        result.getString("color"),
-                        result.getString("license_plates"),
-                        result.getDouble("price")
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
+    }
+    
+    public static List<Vehice> findByIdT(int a) {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, a);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
+    }
+    
+    public static List<Vehice> selectStatus1() {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.status = 1";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
+    }
+    
+    public static List<Vehice> selectStatus2() {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.status = 2";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
+    }
+    
+    public static List<Vehice> selectSit4() {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.number_of_seats = 4";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
+    }
+    
+    public static List<Vehice> selectSit8() {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.number_of_seats = 8";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
+    }
+    
+    public static List<Vehice> selectSit16() {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.number_of_seats = 16";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
                 );
                 listVehice.add(vehice);
             }
@@ -92,11 +238,11 @@ public class QuerryVehice {
     }
     
     public static void delete(int id) {
-        CheckException.checkNumberZero(id);
         open();
-        String sql = "DELETE FROM vehice WHERE id = "+id;
+        String sql = "DELETE FROM vehice WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,13 +250,13 @@ public class QuerryVehice {
         close();
     }
     
-    public static Vehice find(String id) {
-        CheckException.checkCharacterNumber(id);
+    public static Vehice find(int id) {
         Vehice vehice = null;
         open();
-        String sql = "SELECT * FROM vehice WHERE license_plates like %"+id+"%";
+        String sql = "SELECT * FROM vehice WHERE id = ?";
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 vehice = new Vehice(
@@ -121,7 +267,7 @@ public class QuerryVehice {
                     result.getString("testing_date"),
                     result.getString("color"),
                     result.getString("license_plates"),
-                    result.getDouble("price")
+                    result.getString("price")
                 );
                 break;
             }
@@ -134,14 +280,159 @@ public class QuerryVehice {
     
     public static void editById(Vehice vehice) {
         open();
-        String sql = "UPDATE vehice SET number_of_seats = "+vehice.getNumber_of_seats()+", status = "+vehice.getStatus()+", name = "+vehice.getName()+", testing_date = "+vehice.getTesting_date()+", color = "+vehice.getColor()+", license_plates = "+vehice.getLicense_plates()+", price = "+vehice.getPrice()+" WHERE id = "+vehice.getId();
+        String sql = "UPDATE vehice SET number_of_seats = ?, name = ?, testing_date = ?, color = ?, license_plates = ?, price = ? WHERE id = ?";
         
         try {
             statement = conn.prepareStatement(sql);
+            statement.setInt(1, vehice.getNumber_of_seats());
+            statement.setString(2, vehice.getName());
+            statement.setString(3, vehice.getTesting_date());
+            statement.setString(4, vehice.getColor());
+            statement.setString(5, vehice.getLicense_plates());
+            statement.setString(6, vehice.getPrice());
+            statement.setInt(7, vehice.getId());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
         }
         close();
+    }
+    
+    public static Vehice findDetail(int id) {
+        Vehice vehice = null;
+        open();
+        String sql = "SELECT vehice.*,status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                vehice = new Vehice(
+                    result.getInt("id"),
+                    result.getInt("number_of_seats"),
+                    result.getString("name"),
+                    result.getString("testing_date"),
+                    result.getString("color"),
+                    result.getString("license_plates"),
+                    result.getString("price"),
+                    result.getString("status_name")
+                );
+                break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return vehice;
+    }
+    
+    public static List<Vehice> findByStatus() {
+        List<Vehice> lsList = new ArrayList<>();
+        Vehice vehice = null;
+        open();
+        String sql = "SELECT * FROM vehice WHERE status = 1";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                vehice = new Vehice(
+                    result.getInt("id"),
+                    result.getInt("number_of_seats"),
+                    result.getInt("status"),
+                    result.getString("name"),
+                    result.getString("testing_date"),
+                    result.getString("color"),
+                    result.getString("license_plates"),
+                    result.getString("price")
+                );
+                lsList.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return lsList;
+    }
+    
+    public static String findReturnName(int id) {
+        Vehice ve = null;
+        open();
+        String sql = "SELECT name FROM vehice WHERE id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                ve = new Vehice(
+                    result.getString("name")
+                );
+                break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return ve.getName();
+    }
+    
+    public static String findReturnPrice(int id) {
+        Vehice ve = null;
+        open();
+        String sql = "SELECT id,price FROM vehice WHERE id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                ve = new Vehice(
+                    result.getInt("id"),
+                    result.getString("price")
+                );
+                break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return ve.getPrice();
+    }
+    
+    public static void updateStatus(int id,int status){
+        open();
+        String sql = "UPDATE vehice SET status = ? WHERE id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, status);
+            statement.setInt(2, id);
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+    }
+    
+    public static List<Vehice> findBySearch(int id) {
+        List<Vehice> listVehice = new ArrayList<>();
+        open();
+        String sql = "SELECT vehice.*, status.name as status_name FROM vehice JOIN status ON status.id = vehice.status WHERE vehice.id = ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            Vehice vehice = null;
+            while (result.next()) {
+                vehice = new Vehice(
+                        result.getInt("id"),
+                        result.getString("status_name"),
+                        result.getInt("number_of_seats"),
+                        result.getString("name")
+                );
+                listVehice.add(vehice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryVehice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return listVehice;
     }
 }

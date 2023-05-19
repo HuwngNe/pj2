@@ -11,46 +11,169 @@ import com.mycompany.ctmailinh.libraly.CheckException;
  * @author Admin
  */
 public class Hire{
-    protected int id_hire,vehice_id,employee_id,customer_id;
-    protected double total_price,forfeit;
-    protected String start_date,end_date;
+    protected int id_hire,vehice_id,employee_id,customer_id,status_hire_id,status_correct_id,status_payment_id,account_correct_id;
+    protected String start_date,end_date,total_price,nameHire,namePayment,nameCorr,nameVehi,nameEploy,nameCus;
     
     public Hire() {
         
     }
+    public Hire(int id_hire) {
+        this.id_hire = id_hire;
+    }
 
-    public Hire(int id_hire, int vehice_id, int employee_id, int customer_id, double total_price, double forfeit, String start_date, String end_date) {
-        CheckException.checkNumberZero(id_hire);
-        CheckException.checkNumberZero(vehice_id);
-        CheckException.checkNumberZero(employee_id);
-        CheckException.checkNumberZero(customer_id);
-        CheckException.checkNumberZero(total_price);
-        CheckException.checkDateTime(start_date);
-        CheckException.checkDateTime(end_date);
+    public Hire(int id_hire, int vehice_id, int employee_id, int customer_id, int status_hire_id, int status_correct_id, int status_payment_id, String start_date, String end_date, String total_price, String nameHire, String namePayment, String nameCorr, String nameVehi, String nameEploy, String nameCus) {
         this.id_hire = id_hire;
         this.vehice_id = vehice_id;
         this.employee_id = employee_id;
         this.customer_id = customer_id;
-        this.total_price = total_price;
-        this.forfeit = forfeit;
+        this.status_hire_id = status_hire_id;
+        this.status_correct_id = status_correct_id;
+        this.status_payment_id = status_payment_id;
         this.start_date = start_date;
         this.end_date = end_date;
+        this.total_price = total_price;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+        this.nameCorr = nameCorr;
+        this.nameVehi = nameVehi;
+        this.nameEploy = nameEploy;
+        this.nameCus = nameCus;
     }
 
-    public Hire(int vehice_id, int employee_id, int customer_id, double total_price, double forfeit, String start_date, String end_date) {
-        CheckException.checkNumberZero(vehice_id);
-        CheckException.checkNumberZero(employee_id);
-        CheckException.checkNumberZero(customer_id);
-        CheckException.checkNumberZero(total_price);
-        CheckException.checkDateTime(start_date);
-        CheckException.checkDateTime(end_date);
+    public Hire(int vehice_id, int employee_id, int customer_id, String start_date, String end_date, String nameHire, String namePayment, String nameCorr, String nameVehi, String nameEploy, String nameCus) {
         this.vehice_id = vehice_id;
         this.employee_id = employee_id;
         this.customer_id = customer_id;
-        this.total_price = total_price;
-        this.forfeit = forfeit;
         this.start_date = start_date;
         this.end_date = end_date;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+        this.nameCorr = nameCorr;
+        this.nameVehi = nameVehi;
+        this.nameEploy = nameEploy;
+        this.nameCus = nameCus;
+    }
+
+    public Hire(int vehice_id, int customer_id, String start_date, String end_date, String nameHire, String namePayment, String nameCorr, String nameVehi, String nameCus) {
+        this.vehice_id = vehice_id;
+        this.customer_id = customer_id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+        this.nameCorr = nameCorr;
+        this.nameVehi = nameVehi;
+        this.nameCus = nameCus;
+    }
+
+    public Hire(int id_hire, int vehice_id, String start_date, String end_date, String nameHire, String namePayment, String nameCorr, String nameVehi) {
+        this.id_hire = id_hire;
+        this.vehice_id = vehice_id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+        this.nameCorr = nameCorr;
+        this.nameVehi = nameVehi;
+    }
+
+    public Hire(int id_hire, int vehice_id, int employee_id, String start_date, String end_date, String nameHire, String namePayment, String nameCorr, String nameVehi, String nameEploy) {
+        this.id_hire = id_hire;
+        this.vehice_id = vehice_id;
+        this.employee_id = employee_id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+        this.nameCorr = nameCorr;
+        this.nameVehi = nameVehi;
+        this.nameEploy = nameEploy;
+    }
+
+    public Hire(int id_hire, int vehice_id, int employee_id, String start_date) {
+        this.id_hire = id_hire;
+        this.vehice_id = vehice_id;
+        this.employee_id = employee_id;
+        this.start_date = start_date;
+    }
+
+    public Hire(int id_hire, int status_correct_id, String nameHire, String namePayment) {
+        this.id_hire = id_hire;
+        this.status_correct_id = status_correct_id;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+    }
+
+    public Hire(int id_hire, int status_correct_id, String start_date, String nameHire, String namePayment) {
+        this.id_hire = id_hire;
+        this.status_correct_id = status_correct_id;
+        this.start_date = start_date;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+    }
+
+    
+
+    public Hire(int id_hire, String nameHire, String namePayment) {
+        this.id_hire = id_hire;
+        this.nameHire = nameHire;
+        this.namePayment = namePayment;
+    }
+
+    public String getNameCorr() {
+        return nameCorr;
+    }
+
+    public String getNameCus() {
+        return nameCus;
+    }
+
+    public void setNameCus(String nameCus) {
+        this.nameCus = nameCus;
+    }
+
+    public void setNameCorr(String nameCorr) {
+        this.nameCorr = nameCorr;
+    }
+
+    public String getNameVehi() {
+        return nameVehi;
+    }
+
+    public void setNameVehi(String nameVehi) {
+        this.nameVehi = nameVehi;
+    }
+
+    public String getNameEploy() {
+        return nameEploy;
+    }
+
+    public void setNameEploy(String nameEploy) {
+        this.nameEploy = nameEploy;
+    }
+
+    public int getAccount_correct_id() {
+        return account_correct_id;
+    }
+
+    public void setAccount_correct_id(int account_correct_id) {
+        this.account_correct_id = account_correct_id;
+    }
+
+    public String getNameHire() {
+        return nameHire;
+    }
+
+    public void setNameHire(String nameHire) {
+        this.nameHire = nameHire;
+    }
+
+    public String getNamePayment() {
+        return namePayment;
+    }
+
+    public void setNamePayment(String namePayment) {
+        this.namePayment = namePayment;
     }
 
     public int getId_hire() {
@@ -89,29 +212,45 @@ public class Hire{
         this.customer_id = customer_id;
     }
 
-    public double getTotal_price() {
+    public int getStatus_hire_id() {
+        return status_hire_id;
+    }
+
+    public void setStatus_hire_id(int status_hire_id) {
+        this.status_hire_id = status_hire_id;
+    }
+
+    public int getStatus_correct_id() {
+        return status_correct_id;
+    }
+
+    public void setStatus_correct_id(int status_correct_id) {
+        this.status_correct_id = status_correct_id;
+    }
+
+    public int getStatus_payment_id() {
+        return status_payment_id;
+    }
+
+    public void setStatus_payment_id(int status_payment_id) {
+        this.status_payment_id = status_payment_id;
+    }
+
+    public String getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(double total_price) {
-        CheckException.checkNumberZero(total_price);
+    public void setTotal_price(String total_price) {
         this.total_price = total_price;
     }
 
-    public double getForfeit() {
-        return forfeit;
-    }
-
-    public void setForfeit(double forfeit) {
-        this.forfeit = forfeit;
-    }
+    
 
     public String getStart_date() {
         return start_date;
     }
 
     public void setStart_date(String start_date) {
-        CheckException.checkDateTime(start_date);
         this.start_date = start_date;
     }
 
@@ -120,7 +259,6 @@ public class Hire{
     }
 
     public void setEnd_date(String end_date) {
-        CheckException.checkDateTime(end_date);
         this.end_date = end_date;
     }
     

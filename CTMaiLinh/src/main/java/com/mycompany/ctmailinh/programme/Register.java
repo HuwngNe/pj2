@@ -164,6 +164,10 @@ public class Register extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String name = txtname.getText();
         String user = txtuser.getText();
+        if (QuerryAccount.findAcc(user)) {
+            JOptionPane.showMessageDialog(rootPane, "Tài khoản đã tồn tại","Lỗi",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String pass = String.valueOf(txtpass.getPassword());
         String confirmPass = String.valueOf(txtconfirm.getPassword());
         String regex = "[a-zA-Z ]+";
@@ -187,6 +191,7 @@ public class Register extends javax.swing.JFrame {
             account.setCustomer_id(key);
             account.setUsername(user);
             account.setPassword(pass);
+            account.setPermission_id(1);
             QuerryAccount.insert(account);
             JOptionPane.showMessageDialog(rootPane, "Tạo tài khoản thành công");
         }

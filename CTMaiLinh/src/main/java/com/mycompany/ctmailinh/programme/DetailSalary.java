@@ -7,9 +7,7 @@ package com.mycompany.ctmailinh.programme;
 import com.mycompany.ctmailinh.libraly.QuerryBonus;
 import com.mycompany.ctmailinh.libraly.QuerrySalary;
 import com.mycompany.ctmailinh.object.Bonus;
-import com.mycompany.ctmailinh.object.IdChooseBonus;
-import com.mycompany.ctmailinh.object.IdChooseNV;
-import com.mycompany.ctmailinh.object.IdChooseSalary;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Salary;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class DetailSalary extends javax.swing.JFrame {
+    IdDataAdmin iddataad = new IdDataAdmin();
     DefaultTableModel tableModel;
     List<Bonus> dataList = new ArrayList<>();
     int totalBonus = 0;
@@ -31,23 +30,20 @@ public class DetailSalary extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tablebonus.getModel();
         showNewData();
-        IdChooseSalary idchoosesalary = new IdChooseSalary();
-        IdChooseNV idchoosenv = new IdChooseNV();
-        Salary salary = QuerrySalary.findById(idchoosesalary.getIdChooseSalary());
-        txtsalarydetail.setText(idchoosenv.getSalaryBasic());
+        Salary salary = QuerrySalary.findById(iddataad.getIdChooseSalary());
+        txtsalarydetail.setText(iddataad.getSalaryBasic());
         if (!"null".equals(salary.getOvertime())) {
             txtovertimedetail.setText(salary.getOvertime());
-            txttotalpricedetail.setText(String.valueOf(Integer.parseInt(idchoosenv.getSalaryBasic()) + Integer.parseInt(salary.getOvertime()) + totalBonus));
+            txttotalpricedetail.setText(String.valueOf(Integer.parseInt(iddataad.getSalaryBasic()) + Integer.parseInt(salary.getOvertime()) + totalBonus));
         } else {
             txtovertimedetail.setText("Không có");
-            txttotalpricedetail.setText(String.valueOf(Integer.parseInt(idchoosenv.getSalaryBasic()) + totalBonus));
+            txttotalpricedetail.setText(String.valueOf(Integer.parseInt(iddataad.getSalaryBasic()) + totalBonus));
         }
-        QuerrySalary.updateTotal(txttotalpricedetail.getText(), idchoosesalary.getIdChooseSalary());
+        QuerrySalary.updateTotal(txttotalpricedetail.getText(), iddataad.getIdChooseSalary());
     }
 
     private void showNewData() {
-        IdChooseSalary idchoosesalary = new IdChooseSalary();
-        dataList = QuerryBonus.selectByFk(idchoosesalary.getIdChooseSalary());
+        dataList = QuerryBonus.selectByFk(iddataad.getIdChooseSalary());
         totalBonus = 0;
         for (Bonus bonus : dataList) {
             totalBonus += Integer.parseInt(bonus.getPay());
@@ -258,8 +254,7 @@ public class DetailSalary extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        IdChooseSalary idchooseSl = new IdChooseSalary();
-        idchooseSl.setIdChooseSalary(-1);
+        iddataad.setIdChooseSalary(-1);
         SalaryNV salaryNv = new SalaryNV();
         salaryNv.setVisible(true);
         setVisible(false);
@@ -277,13 +272,11 @@ public class DetailSalary extends javax.swing.JFrame {
             return;
         }
         int a = Integer.parseInt(String.valueOf(tablebonus.getValueAt(choosemouse, 1)));
-        IdChooseBonus idchoosebos = new IdChooseBonus();
-        idchoosebos.setIdchoosebonus(a);
+        iddataad.setIdChooseBonus(a);
     }//GEN-LAST:event_tablebonusMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        IdChooseBonus idchoosebos = new IdChooseBonus();
-        if (idchoosebos.getIdchoosebonus() == -1) {
+        if (iddataad.getIdChooseBonus() == -1) {
             JOptionPane.showMessageDialog(rootPane, "Hãy chọn lương thưởng muốn sửa","Lỗi",JOptionPane.ERROR_MESSAGE);
         } else {
             EditBonus editbonus = new EditBonus();
@@ -293,16 +286,14 @@ public class DetailSalary extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        IdChooseBonus idchoosebos = new IdChooseBonus();
-        IdChooseSalary idchoosesalary = new IdChooseSalary();
-        if (idchoosebos.getIdchoosebonus() != -1) {
+        if (iddataad.getIdChooseBonus() != -1) {
             int option = JOptionPane.showConfirmDialog(rootPane,
                         "Bạn có chắc muốn xoá lương thưởng này không ?",
                         "Xác nhận",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
             if (option == 0) {
-                QuerryBonus.delete(idchoosebos.getIdchoosebonus());
+                QuerryBonus.delete(iddataad.getIdChooseBonus());
                 JOptionPane.showMessageDialog(rootPane, "Xoá thành công");
                 showNewData();
                 if (!"Không có".equals(txtovertimedetail.getText())) {
@@ -310,7 +301,7 @@ public class DetailSalary extends javax.swing.JFrame {
                 } else {
                     txttotalpricedetail.setText(String.valueOf(Integer.parseInt(txtsalarydetail.getText()) + totalBonus));
                 }
-                QuerrySalary.updateTotal(txttotalpricedetail.getText(), idchoosesalary.getIdChooseSalary());
+                QuerrySalary.updateTotal(txttotalpricedetail.getText(), iddataad.getIdChooseSalary());
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Hãy chọn lương thưởng muốn xoá","Lỗi",JOptionPane.ERROR_MESSAGE);

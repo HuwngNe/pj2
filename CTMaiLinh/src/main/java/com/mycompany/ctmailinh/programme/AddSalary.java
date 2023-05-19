@@ -6,7 +6,7 @@ package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.QuerryEmployee;
 import com.mycompany.ctmailinh.libraly.QuerrySalary;
-import com.mycompany.ctmailinh.object.IdChooseNV;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Salary;
 import javax.swing.JOptionPane;
 
@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author Windows
  */
 public class AddSalary extends javax.swing.JFrame {
-    IdChooseNV id = new IdChooseNV();
+    IdDataAdmin iddataad = new IdDataAdmin();
     /**
      * Creates new form AddSalary
      */
@@ -187,9 +187,9 @@ public class AddSalary extends javax.swing.JFrame {
         }
         String year = String.valueOf(txtyearsalaryadd.getSelectedItem());
         
-        int monthSalary = Integer.parseInt(QuerryEmployee.selectSalary(id.getIdChooseNV()));
+        int monthSalary = Integer.parseInt(QuerryEmployee.selectSalary(iddataad.getIdChooseNV()));
         Salary salary = new Salary();
-        salary.setId_employee(id.getIdChooseNV());
+        salary.setId_employee(iddataad.getIdChooseNV());
         salary.setDate(date+"-"+month+"-"+year);
         if (!"".equals(overtime)) {
             salary.setOvertime(overtime);

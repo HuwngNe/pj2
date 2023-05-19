@@ -4,9 +4,11 @@
  */
 package com.mycompany.ctmailinh.programme;
 
+import com.mycompany.ctmailinh.libraly.QuerryAccount;
 import com.mycompany.ctmailinh.libraly.QuerryEmployee;
+import com.mycompany.ctmailinh.libraly.QuerryHire;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
-import com.mycompany.ctmailinh.object.IdChooseNV;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Office;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class NV extends javax.swing.JFrame {
-    IdChooseNV idchooseNV = new IdChooseNV();
+    IdDataAdmin iddataad = new IdDataAdmin();
     DefaultTableModel tableModel;
     List<Office> dataList = new ArrayList<>();
     /**
@@ -63,11 +65,14 @@ public class NV extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btndetail = new javax.swing.JButton();
+        txtsortNV = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        txtsearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         nvtable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        txtsortNV = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,19 +104,47 @@ public class NV extends javax.swing.JFrame {
             }
         });
 
+        txtsortNV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp theo tê chức vụ a đến z", "Sắp xếp theo tên chức vụ z đến a", "Sắp xếp theo tên a đến z", "Sắp xếp theo tên z đến a" }));
+        txtsortNV.setSelectedIndex(-1);
+        txtsortNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsortNVActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Tìm kiếm tên:");
+
+        jButton5.setText("Tìm");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btndetail)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtsortNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btndetail)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtsearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,7 +156,14 @@ public class NV extends javax.swing.JFrame {
                     .addComponent(jButton3)
                     .addComponent(jButton4)
                     .addComponent(btndetail))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtsortNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton5)
+                    .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -169,14 +209,6 @@ public class NV extends javax.swing.JFrame {
             }
         });
 
-        txtsortNV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp theo tê chức vụ a đến z", "Sắp xếp theo tên chức vụ z đến a", "Sắp xếp theo tên a đến z", "Sắp xếp theo tên z đến a" }));
-        txtsortNV.setSelectedIndex(-1);
-        txtsortNV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtsortNVActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,10 +224,8 @@ public class NV extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtsortNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(0, 322, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -205,13 +235,11 @@ public class NV extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtsortNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -242,7 +270,7 @@ public class NV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (idchooseNV.getIdChooseNV() > 0) {
+        if (iddataad.getIdChooseNV()> 0) {
             EditNV editNV = new EditNV();
             editNV.setVisible(true);
             setVisible(false);
@@ -257,11 +285,11 @@ public class NV extends javax.swing.JFrame {
             return;
         }
         int a = Integer.parseInt(String.valueOf(nvtable.getValueAt(idchoose, 1)));
-        IdChooseNV.setIdChooseNV(a);
+        iddataad.setIdChooseNV(a);
     }//GEN-LAST:event_nvtableMouseClicked
 
     private void btndetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndetailActionPerformed
-        if (IdChooseNV.getIdChooseNV() > 0) {
+        if (iddataad.getIdChooseNV()> 0) {
             DetailNV detailnv = new DetailNV();
             detailnv.setVisible(true);
             setVisible(false);
@@ -271,15 +299,17 @@ public class NV extends javax.swing.JFrame {
     }//GEN-LAST:event_btndetailActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (idchooseNV.getIdChooseNV() > 0) {
+        if (iddataad.getIdChooseNV()> 0) {
             int option = JOptionPane.showConfirmDialog(rootPane,
                         "Bạn có chắc muốn xoá nhân viên này không ?",
                         "Xác nhận",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
             if (option == 0) {
-                QuerryOffice.deleteByIdFk(idchooseNV.getIdChooseNV());
-                QuerryEmployee.delete(idchooseNV.getIdChooseNV());
+                QuerryOffice.deleteByIdFk(iddataad.getIdChooseNV());
+                QuerryHire.deleteByIdEmp(iddataad.getIdChooseNV());
+                QuerryAccount.deleteByIdEmp(iddataad.getIdChooseNV());
+                QuerryEmployee.delete(iddataad.getIdChooseNV());
                 JOptionPane.showMessageDialog(rootPane, "Xoá thành công");
                 showNewData();
             }
@@ -287,6 +317,12 @@ public class NV extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Hãy chọn nhân viên muốn xoá","Lỗi",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String search = txtsearch.getText();
+        dataList = QuerryOffice.select(search);
+        showTable();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,10 +365,13 @@ public class NV extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable nvtable;
+    private javax.swing.JTextField txtsearch;
     private javax.swing.JComboBox<String> txtsortNV;
     // End of variables declaration//GEN-END:variables
 }

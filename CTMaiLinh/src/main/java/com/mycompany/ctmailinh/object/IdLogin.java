@@ -10,6 +10,7 @@ package com.mycompany.ctmailinh.object;
  */
 public class IdLogin {
     private static int id = -1;
+    private static int idCurrent = -1;
 
     public IdLogin() {
     }
@@ -20,6 +21,14 @@ public class IdLogin {
 
     public static void setId(int id) {
         IdLogin.id = id;
+    }
+
+    public static int getIdCurrent() {
+        return idCurrent;
+    }
+
+    public static void setIdCurrent(int idCurrent) {
+        IdLogin.idCurrent = idCurrent;
     }
 
 }

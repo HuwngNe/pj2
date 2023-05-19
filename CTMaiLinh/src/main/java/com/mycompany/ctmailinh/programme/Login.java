@@ -154,16 +154,24 @@ public class Login extends javax.swing.JFrame {
         } else {
             IdLogin idlogin = new IdLogin();
             idlogin.setId(account.getId());
-            if (account.getPermission_id() == 2) {
-                Admin admin = new Admin();
-                admin.setVisible(true);
-                setVisible(false);
-            } else if (account.getPermission_id() == 1) {
-                User user = new User();
-                user.setVisible(true);
-                setVisible(false);
-            } else {
-                
+            switch (account.getPermission_id()) {
+                case 2 -> {
+                    Admin admin = new Admin();
+                    admin.setVisible(true);
+                    setVisible(false);
+                }
+                case 1 -> {
+                    User user = new User();
+                    user.setVisible(true);
+                    setVisible(false);
+                    idlogin.setIdCurrent(account.getCustomer_id());
+                }
+                default -> {
+                    EmployeeAction ea = new EmployeeAction();
+                    ea.setVisible(true);
+                    setVisible(false);
+                    idlogin.setIdCurrent(account.getEmployee_id());
+                }
             }
         }
     }//GEN-LAST:event_btnloginActionPerformed

@@ -6,7 +6,7 @@ package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.QuerryBonus;
 import com.mycompany.ctmailinh.object.Bonus;
-import com.mycompany.ctmailinh.object.IdChooseSalary;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Windows
  */
 public class AddBonus extends javax.swing.JFrame {
-
+    IdDataAdmin iddataad = new IdDataAdmin();
     /**
      * Creates new form AddBonus
      */
@@ -138,12 +138,11 @@ public class AddBonus extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String name = txttitlebonusadd.getText();
         String price = txtpricebonusadd.getText();
-        IdChooseSalary idchoosesalary = new IdChooseSalary();
         if (!"".equals(name) && !"".equals(price)) {
             Bonus bonus = new Bonus();
             bonus.setName(name);
             bonus.setPay(price);
-            bonus.setId_salary_bonus(idchoosesalary.getIdChooseSalary());
+            bonus.setId_salary_bonus(iddataad.getIdChooseSalary());
             QuerryBonus.insert(bonus);
             JOptionPane.showMessageDialog(rootPane, "Thêm thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         } else {

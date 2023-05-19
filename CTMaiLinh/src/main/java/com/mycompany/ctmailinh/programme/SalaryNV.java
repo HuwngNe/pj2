@@ -5,8 +5,7 @@
 package com.mycompany.ctmailinh.programme;
 
 import com.mycompany.ctmailinh.libraly.QuerrySalary;
-import com.mycompany.ctmailinh.object.IdChooseNV;
-import com.mycompany.ctmailinh.object.IdChooseSalary;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Salary;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class SalaryNV extends javax.swing.JFrame {
-    IdChooseSalary idchoosesalary = new IdChooseSalary();
-    IdChooseNV id = new IdChooseNV();
+    IdDataAdmin iddataad = new IdDataAdmin();
+    
     DefaultTableModel tableModel;
     List<Salary> dataList = new ArrayList<>();
     /**
@@ -33,7 +32,7 @@ public class SalaryNV extends javax.swing.JFrame {
     }
 
     private void showNewData() {
-        dataList = QuerrySalary.selectById(id.getIdChooseNV());
+        dataList = QuerrySalary.selectById(iddataad.getIdChooseNV());
         showTable();
     }
     
@@ -229,6 +228,7 @@ public class SalaryNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        iddataad.setIdChooseSalary(-1);
         DetailNV detailnv = new DetailNV();
         detailnv.setVisible(true);
         setVisible(false);
@@ -240,11 +240,11 @@ public class SalaryNV extends javax.swing.JFrame {
             return;
         }
         int a = Integer.parseInt(String.valueOf(tablesalary.getValueAt(choosetable, 1)));
-        idchoosesalary.setIdChooseSalary(a);
+        iddataad.setIdChooseSalary(a);
     }//GEN-LAST:event_tablesalaryMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (idchoosesalary.getIdChooseSalary() != -1) {
+        if (iddataad.getIdChooseSalary() != -1) {
             EditSalary editSalary = new EditSalary();
             editSalary.setVisible(true);
             setVisible(false);
@@ -254,14 +254,14 @@ public class SalaryNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (idchoosesalary.getIdChooseSalary() != -1) {
+        if (iddataad.getIdChooseSalary()!= -1) {
             int option = JOptionPane.showConfirmDialog(rootPane,
                         "Bạn có chắc muốn xoá hoá đơn này không ?",
                         "Xác nhận",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
             if (option == 0) {
-                QuerrySalary.delete(idchoosesalary.getIdChooseSalary());
+                QuerrySalary.delete(iddataad.getIdChooseSalary());
                 JOptionPane.showMessageDialog(rootPane, "Xoá thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                 showNewData();
             }
@@ -271,7 +271,7 @@ public class SalaryNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if (idchoosesalary.getIdChooseSalary() != -1) {
+        if (iddataad.getIdChooseSalary() != -1) {
             DetailSalary detailsalary = new DetailSalary();
             detailsalary.setVisible(true);
             setVisible(false);

@@ -7,8 +7,7 @@ package com.mycompany.ctmailinh.programme;
 import com.mycompany.ctmailinh.libraly.QuerryEmployee;
 import com.mycompany.ctmailinh.libraly.QuerryOffice;
 import com.mycompany.ctmailinh.object.Employee;
-import com.mycompany.ctmailinh.object.IdChooseNV;
-import com.mycompany.ctmailinh.object.IdChooseOffice;
+import com.mycompany.ctmailinh.object.IdDataAdmin;
 import com.mycompany.ctmailinh.object.Office;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class DetailNV extends javax.swing.JFrame {
-    IdChooseNV id = new IdChooseNV();
-    IdChooseOffice idChooseOff = new IdChooseOffice();
+    IdDataAdmin iddataad = new IdDataAdmin();
+    
     DefaultTableModel tableModel;
     List<Office> dataList = new ArrayList<>();
     /**
@@ -31,8 +30,8 @@ public class DetailNV extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
-        Employee employee = QuerryEmployee.findById(id.getIdChooseNV());
-        id.setSalaryBasic(employee.getSalary());
+        Employee employee = QuerryEmployee.findById(iddataad.getIdChooseNV());
+        iddataad.setSalaryBasic(employee.getSalary());
         txtnameDetail.setText(employee.getFullname());
         switch (employee.getGender()) {
             case "male" -> txtgenderDetail.setText("Nam");
@@ -49,7 +48,7 @@ public class DetailNV extends javax.swing.JFrame {
     }
     
     private void showNewData() {
-        dataList = QuerryOffice.selectById(id.getIdChooseNV());
+        dataList = QuerryOffice.selectById(iddataad.getIdChooseNV());
         showTable();
     }
     
@@ -356,8 +355,8 @@ public class DetailNV extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        id.setIdChooseNV(-1);
-        idChooseOff.setIdChooseOffice(-1);
+        iddataad.setIdChooseNV(-1);
+        iddataad.setIdChooseOff(-1);
         NV nv = new NV();
         nv.setVisible(true);
         setVisible(false);
@@ -370,7 +369,7 @@ public class DetailNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (idChooseOff.getIdChooseOffice() != -1) {
+        if (iddataad.getIdChooseOff() != -1) {
             EditOffice editOff = new EditOffice();
             editOff.setVisible(true);
             setVisible(false);
@@ -384,19 +383,19 @@ public class DetailNV extends javax.swing.JFrame {
         if (choosemouse == -1) {
             return;
         }
-        int a = Integer.valueOf(String.valueOf(tableoffice.getValueAt(choosemouse, 1)));
-        idChooseOff.setIdChooseOffice(a);
+        int a = Integer.parseInt(String.valueOf(tableoffice.getValueAt(choosemouse, 1)));
+        iddataad.setIdChooseOff(a);
     }//GEN-LAST:event_tableofficeMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (idChooseOff.getIdChooseOffice() != -1) {
+        if (iddataad.getIdChooseOff() != -1) {
             int option = JOptionPane.showConfirmDialog(rootPane,
                         "Bạn có chắc muốn xoá chức vụ này không ?",
                         "Xác nhận",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
             if (option == 0) {
-                QuerryOffice.deleteByIdPk(idChooseOff.getIdChooseOffice());
+                QuerryOffice.deleteByIdPk(iddataad.getIdChooseOff());
                 JOptionPane.showMessageDialog(rootPane, "Xoá thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                 showNewData();
             }
