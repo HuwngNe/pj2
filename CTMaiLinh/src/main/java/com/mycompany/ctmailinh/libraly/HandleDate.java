@@ -18,6 +18,13 @@ public class HandleDate {
         return str;
     }
 
+    public String Stringdate(String str) {
+        if (str.length() == 1) {
+            str = "0"+str;
+        }
+        return str;
+    }
+    
     private String removeChatAt(String s, int pos) {
         return s.substring(0, pos) + s.substring(pos + 1);
     }

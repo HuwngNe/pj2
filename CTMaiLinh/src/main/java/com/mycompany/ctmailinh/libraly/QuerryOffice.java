@@ -57,6 +57,7 @@ public class QuerryOffice {
             statement.setInt(1, off.getId_employee());
             statement.setInt(2, Integer.parseInt(off.getPosition()));
             statement.setString(3, off.getStart());
+            
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(QuerryOffice.class.getName()).log(Level.SEVERE, null, ex);

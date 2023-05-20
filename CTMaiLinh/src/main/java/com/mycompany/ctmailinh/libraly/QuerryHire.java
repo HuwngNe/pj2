@@ -5,6 +5,7 @@
 package com.mycompany.ctmailinh.libraly;
 
 import com.mycompany.ctmailinh.object.Hire;
+import com.mycompany.ctmailinh.object.SaleReport;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -652,5 +653,51 @@ public class QuerryHire {
             Logger.getLogger(QuerryHire.class.getName()).log(Level.SEVERE, null, ex);
         }
         close();
+    }
+    
+    public static String TT(String strhq, String strhn) {
+        SaleReport sr = null;
+        open();
+        String sql = "SELECT COUNT(*) as count_hire  FROM hire WHERE total_price NOT LIKE 'NULL' AND created_at BETWEEN ? AND ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, strhq);
+            statement.setString(2, strhn);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                sr = new SaleReport(
+                    result.getString("count_hire")
+                );
+                break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryHire.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return sr.getTotal_price();
+    }
+    
+    public static List<Hire> TotalPrice(String strhq, String strhn) {
+        List<Hire> ls = new ArrayList<>();
+        Hire h = null;
+        open();
+        String sql = "SELECT id,total_price FROM hire WHERE total_price NOT LIKE 'NULL' AND created_at BETWEEN ? AND ?";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, strhq);
+            statement.setString(2, strhn);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                h = new Hire(
+                    result.getInt("id"),
+                    result.getString("total_price")
+                );
+                ls.add(h);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuerryHire.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        close();
+        return ls;
     }
 }

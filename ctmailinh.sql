@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 19, 2023 lúc 06:47 PM
+-- Thời gian đã tạo: Th5 20, 2023 lúc 05:15 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -138,15 +138,18 @@ CREATE TABLE `hire` (
   `status_payment_id` int(10) UNSIGNED DEFAULT NULL,
   `account_correct_id` int(10) UNSIGNED DEFAULT NULL,
   `start_date` varchar(100) DEFAULT NULL,
-  `end_date` varchar(100) DEFAULT NULL
+  `end_date` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `hire`
 --
 
-INSERT INTO `hire` (`id`, `vehice_id`, `employee_id`, `customer_id`, `total_price`, `status_hire_id`, `status_correct_id`, `status_payment_id`, `account_correct_id`, `start_date`, `end_date`) VALUES
-(2, 6, 3, 6, NULL, 3, 1, 1, 6, '05-07-2023 22:00', NULL);
+INSERT INTO `hire` (`id`, `vehice_id`, `employee_id`, `customer_id`, `total_price`, `status_hire_id`, `status_correct_id`, `status_payment_id`, `account_correct_id`, `start_date`, `end_date`, `created_at`) VALUES
+(2, 6, 3, 6, '20000000', 2, 2, 2, 6, '05-07-2023 22:00', '09-07-2023 22:00', '2023-05-19 01:10:02'),
+(4, 2, 6, 7, '28000000', 2, 2, 2, 6, '05-07-2023 22:00', '09-07-2023 22:00', '2023-05-19 02:46:48'),
+(5, 6, 2, 6, '6000000', 2, 2, 2, 6, '09-07-2023 22:00', '13-07-2023 22:00', '2023-05-20 03:07:52');
 
 -- --------------------------------------------------------
 
@@ -267,10 +270,18 @@ INSERT INTO `salary` (`id`, `id_employee`, `overtime`, `date`, `total_salary`) V
 
 CREATE TABLE `sales_report` (
   `id` int(11) UNSIGNED NOT NULL,
-  `date` date DEFAULT NULL,
-  `total_price` double DEFAULT NULL,
-  `total_run_vehice` int(11) DEFAULT NULL
+  `date` varchar(100) DEFAULT NULL,
+  `total_price` varchar(100) DEFAULT NULL,
+  `total_hire` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `sales_report`
+--
+
+INSERT INTO `sales_report` (`id`, `date`, `total_price`, `total_hire`, `created_at`) VALUES
+(6, '2023-05-19', '48000000', 2, '2023-05-20 03:05:42');
 
 -- --------------------------------------------------------
 
@@ -527,7 +538,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT cho bảng `hire`
 --
 ALTER TABLE `hire`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `info_company`
@@ -563,7 +574,7 @@ ALTER TABLE `salary`
 -- AUTO_INCREMENT cho bảng `sales_report`
 --
 ALTER TABLE `sales_report`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `status`

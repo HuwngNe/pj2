@@ -21,6 +21,11 @@ public class Hire{
         this.id_hire = id_hire;
     }
 
+    public Hire(int id_hire, String total_price) {
+        this.id_hire = id_hire;
+        this.total_price = total_price;
+    }
+
     public Hire(int id_hire, int vehice_id, int employee_id, int customer_id, int status_hire_id, int status_correct_id, int status_payment_id, String start_date, String end_date, String total_price, String nameHire, String namePayment, String nameCorr, String nameVehi, String nameEploy, String nameCus) {
         this.id_hire = id_hire;
         this.vehice_id = vehice_id;
