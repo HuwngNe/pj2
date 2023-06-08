@@ -74,7 +74,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        btnregister.setBackground(new java.awt.Color(192, 57, 43));
+        btnregister.setBackground(new java.awt.Color(0, 204, 153));
         btnregister.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnregister.setForeground(new java.awt.Color(255, 255, 255));
         btnregister.setText("Đăng ký");
